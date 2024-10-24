@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-toast-message/lib/src/types/index.d.ts b/node_modules/react-native-toast-message/lib/src/types/index.d.ts
+index e6e502e..9ab5a46 100644
+--- a/node_modules/react-native-toast-message/lib/src/types/index.d.ts
++++ b/node_modules/react-native-toast-message/lib/src/types/index.d.ts
+@@ -145,6 +145,7 @@ export declare type ToastProps = {
+      * Default value: `4000`
+      */
+     visibilityTime?: number;
++    swipeable?: boolean;
+     /**
+      * When `true`, the visible Toast automatically hides after a certain number of milliseconds,
+      * specified by the `visibilityTime` prop.
