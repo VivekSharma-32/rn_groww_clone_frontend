@@ -3,7 +3,6 @@ import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {navigationRef} from '../utils/NavigationUtil';
 import {useCustomTheme} from './Theme';
 import MainNavigator from './MainNavigator';
-import NoInternet from '../components/global/NoInternet';
 
 const Navigation = () => {
   const theme = useCustomTheme();
@@ -22,7 +21,6 @@ const Navigation = () => {
   return (
     <NavigationContainer ref={navigationRef} theme={MyTheme}>
       <MainNavigator />
-      <NoInternet />
     </NavigationContainer>
   );
 };

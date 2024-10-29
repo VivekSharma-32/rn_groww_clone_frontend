@@ -65,7 +65,6 @@ const NoInternet = () => {
           </View>
         </SafeAreaView>
       )}
-      <Text>NoInternet</Text>
     </>
   );
 };

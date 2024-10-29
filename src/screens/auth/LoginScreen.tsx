@@ -1,5 +1,5 @@
 import {Image, StyleSheet, Text, useColorScheme, View} from 'react-native';
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
 import CustomText from '../../components/global/CustomText';
 import {FONTS} from '../../constants/Fonts';
@@ -18,10 +18,10 @@ import SocialLoginButton from '../../components/auth/SocialLoginButton';
 import GoogleIcon from '../../assets/images/google.png';
 import {signInWithGoogle} from '../../redux/SocialLogin';
 import {navigate} from '../../utils/NavigationUtil';
-import Toast from 'react-native-toast-message';
 
 const LoginScreen: FC = () => {
   const theme = useColorScheme();
+
   return (
     <CustomSafeAreaView>
       <View style={styles.container}>
@@ -53,12 +53,6 @@ const LoginScreen: FC = () => {
         firstText="Use other email ID"
         // onPress={() => navigate('EmailScreen')}
         onPress={() => {
-          Toast.show({
-            type: 'normalToast',
-            props: {
-              msg: 'We are facing a temportary problem. Please try again after sometime',
-            },
-          });
           navigate('EmailScreen');
         }}
         style={{marginVertical: 30, marginTop: 15, textAlign: 'center'}}

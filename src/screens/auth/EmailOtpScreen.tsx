@@ -8,24 +8,34 @@ import CustomButton from '../../components/global/CustomButton';
 import {GlobalStyles} from '../../styles/GlobalStyles';
 import {RFValue} from 'react-native-responsive-fontsize';
 import OtpTimer from '../../components/auth/OtpTimer';
+import {useAppDispatch} from '../../redux/reduxHook';
+import {SendOTP, VerifyOTP} from '../../redux/actions/userAction';
 
 const EmailOtpScreen = ({route}: any) => {
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
+  const dispatch = useAppDispatch();
   const [otpError, setOtpError] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!otp) {
       setOtpError('Wrong OTP, 2 attempts remaining');
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      navigate('SetPasswordScreen', {
+    await dispatch(
+      VerifyOTP({
         email: route.params.email,
-      });
-      setLoading(false);
-    }, 2000);
+        otp: otp,
+        otp_type: 'email',
+        data: null,
+      }),
+    );
+    setLoading(false);
+  };
+
+  const resendOTPHandler = async () => {
+    await dispatch(SendOTP({email: route?.params?.email, otp_type: 'email'}));
   };
   return (
     <CustomSafeAreaView>
@@ -50,7 +60,9 @@ const EmailOtpScreen = ({route}: any) => {
           returnKeyType="done"
           maxLength={6}
           keyboardType="number-pad"
-          rightText={<OtpTimer type="email" onPress={() => {}} />}
+          rightText={
+            <OtpTimer type="email" onPress={() => resendOTPHandler()} />
+          }
         />
       </ScrollView>
       <View style={GlobalStyles.bottomBtn}>

@@ -9,8 +9,9 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import PersonalDetailScreen from '../screens/auth/PersonalDetailScreen';
 import PhoneScreen from '../screens/auth/PhoneScreen';
 import PinScreen from '../screens/auth/PinScreen';
+import RegisterScreen from '../screens/auth/RegisterScreen';
 import SetPasswordScreen from '../screens/auth/SetPasswordScreen';
-import HomeScreen from '../screens/dashboard/HomeScreen';
+import BottomTab from './BottomTab';
 
 export const authStacks = [
   {
@@ -61,12 +62,16 @@ export const authStacks = [
     name: 'AuthVerificationScreen',
     component: AuthVerificationScreen,
   },
+  {
+    name: 'RegisterScreen',
+    component: RegisterScreen,
+  },
 ];
 
 export const dashboardStack = [
   {
-    name: 'HomeScreen',
-    component: HomeScreen,
+    name: 'BottomTab',
+    component: BottomTab,
   },
 ];
 

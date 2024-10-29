@@ -3,13 +3,13 @@ import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
 import CenteredLogo from '../../components/global/CenteredLogo';
 import CustomText from '../../components/global/CustomText';
 
-const HomeScreen: FC = () => {
+const MutualTab: FC = () => {
   return (
     <CustomSafeAreaView>
       <CenteredLogo />
-      <CustomText>Bottom Tabs</CustomText>
+      <CustomText>Mutual Funds</CustomText>
     </CustomSafeAreaView>
   );
 };
 
-export default HomeScreen;
+export default MutualTab;

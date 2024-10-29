@@ -1,12 +1,12 @@
-import {View, Text, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
-import {navigate} from '../../utils/NavigationUtil';
 import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
 import CustomText from '../../components/global/CustomText';
+import {StyleSheet} from 'react-native';
 import {FONTS} from '../../constants/Fonts';
-import OTPInput from '../../components/inputs/OTPInput';
-import CustomNumberPad from '../../components/inputs/CustomNumberPad';
 import {RFValue} from 'react-native-responsive-fontsize';
+import CustomNumberPad from '../../components/inputs/CustomNumberPad';
+import OTPInput from '../../components/inputs/OTPInput';
+import {navigate} from '../../utils/NavigationUtil';
 
 const PinScreen = () => {
   const [otpValues, setOtpValues] = useState(['', '', '', '']);

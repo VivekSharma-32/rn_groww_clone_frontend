@@ -1,45 +1,67 @@
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  useColorScheme,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
 import React, {useState} from 'react';
-import {useTheme} from '@react-navigation/native';
-import {navigate} from '../../utils/NavigationUtil';
 import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
 import CustomText from '../../components/global/CustomText';
 import {FONTS} from '../../constants/Fonts';
-import {Colors as colorw} from '../../constants/Colors';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+  useColorScheme,
+} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useTheme} from '@react-navigation/native';
 import CustomButton from '../../components/global/CustomButton';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Colors as colorw} from '../../constants/Colors';
 import OtpTimer from '../../components/auth/OtpTimer';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {useAppDispatch, useAppSelector} from '../../redux/reduxHook';
+import {SendOTP, VerifyOTP} from '../../redux/actions/userAction';
+import {useCustomColorScheme} from '../../navigation/Theme';
+import {selectUser} from '../../redux/reducers/userReducer';
 
 const PhoneScreen = () => {
   const {colors} = useTheme();
-  const theme = useColorScheme();
+  const user = useAppSelector(selectUser);
+  const theme = useCustomColorScheme();
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-
-  const handleSendOTP = () => {
-    // Logic to send OTP
+  const dispatch = useAppDispatch();
+  const handleSendOTP = async () => {
+    setLoading(true);
+    await dispatch(SendOTP({email: user.email || '', otp_type: 'phone'}));
     setOtpSent(true);
+    setLoading(false);
   };
 
-  const handleVerifyOTP = () => {
+  const handleVerifyOTP = async () => {
     if (!otp) {
-      setOtpError('Wrong OTP, 2 attempts remaining');
+      setOtpError('Enter OTP');
       return;
     }
-    navigate('PersonalDetailScreen');
+    setLoading(true);
+    await dispatch(
+      VerifyOTP({
+        email: user.email || '',
+        otp_type: 'phone',
+        data: phoneNumber,
+        otp: otp,
+      }),
+    );
+    setLoading(false);
   };
 
+  const handlePress = async () => {
+    if (otpSent) {
+      handleVerifyOTP();
+      return;
+    }
+    handleSendOTP();
+  };
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={10}
@@ -122,7 +144,7 @@ const PhoneScreen = () => {
                     fontFamily: FONTS.Regular,
                   }}
                   type="OTP"
-                  onPress={() => {}}
+                  onPress={() => handleSendOTP()}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -156,9 +178,9 @@ const PhoneScreen = () => {
           )}
           <CustomButton
             text={otpSent ? 'VERIFY' : 'SEND OTP'}
-            onPress={otpSent ? handleVerifyOTP : handleSendOTP}
-            loading={false}
-            disabled={false}
+            onPress={handlePress}
+            loading={loading}
+            disabled={loading}
           />
         </View>
       </CustomSafeAreaView>

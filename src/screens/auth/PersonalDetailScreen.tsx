@@ -10,6 +10,8 @@ import {FONTS} from '../../constants/Fonts';
 import {navigate} from '../../utils/NavigationUtil';
 import CustomDateInput from '../../components/inputs/CustomDateInput';
 import CustomRadioInput from '../../components/inputs/CustomRadioInput';
+import {useAppDispatch} from '../../redux/reduxHook';
+import {UpdateProfile} from '../../redux/actions/userAction';
 
 interface Inputs {
   name: string;
@@ -23,6 +25,8 @@ const PersonalDetailScreen = () => {
     date_of_birth: '',
     gender: '',
   });
+
+  const dispatch = useAppDispatch();
 
   const [errors, setErrors] = useState<{[key: string]: string | undefined}>({});
   const [loading, setLoading] = useState(false);
@@ -60,13 +64,11 @@ const PersonalDetailScreen = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = async () => {
     if (validateForm()) {
       setLoading(true);
-      setTimeout(() => {
-        navigate('PinScreen');
-        setLoading(false);
-      }, 2000);
+      await dispatch(UpdateProfile(inputs));
+      setLoading(false);
     }
   };
 

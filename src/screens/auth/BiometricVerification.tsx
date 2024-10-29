@@ -70,7 +70,7 @@ const BiometricVerification: FC<BiometricProp> = ({onForgotPin}) => {
         setLoading(false);
         setOtpValues(initialState);
         setFocusedIndex(0);
-        resetAndNavigate('HomeScreen');
+        resetAndNavigate('BottomTab');
       }, 2000);
     }
   };

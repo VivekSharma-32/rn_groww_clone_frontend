@@ -9,11 +9,15 @@ import {navigate} from '../../utils/NavigationUtil';
 import {ScrollView} from 'react-native';
 import {validateEmail} from '../../utils/ValidationUtils';
 import {GlobalStyles} from '../../styles/GlobalStyles';
+import {useAppDispatch} from '../../redux/reduxHook';
+import {CheckEmail} from '../../redux/actions/userAction';
 
 const EmailScreen: FC = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+
+  const dispatch = useAppDispatch();
 
   const validate = () => {
     if (!validateEmail(email)) {
@@ -25,19 +29,10 @@ const EmailScreen: FC = () => {
 
   const handleOnSubmit = async () => {
     setLoading(true);
-    setTimeout(() => {
-      if (validate()) {
-        //if user exist with mail
-        navigate('EmailOtpScreen', {
-          email: email,
-        });
-        //if user doesn't exist with mail
-        // navigate("EmailOtpScreen", {
-        //   email: email,
-        // });
-      }
-      setLoading(false);
-    }, 2000);
+    if (validate()) {
+      await dispatch(CheckEmail({email: email.toLowerCase()}));
+    }
+    setLoading(false);
   };
 
   return (
