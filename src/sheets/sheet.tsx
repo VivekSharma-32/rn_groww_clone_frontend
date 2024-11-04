@@ -1,7 +1,7 @@
 import {SheetDefinition, registerSheet} from 'react-native-actions-sheet';
-import CreateWatchlist from './CreateWatchlistSheet';
+import CreateWatchlistSheet from './CreateWatchListSheet';
 
-registerSheet('create-watchlist', CreateWatchlist);
+registerSheet('create-watchlist', CreateWatchlistSheet);
 
 declare module 'react-native-actions-sheet' {
   interface Sheets {

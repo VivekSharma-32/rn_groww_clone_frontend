@@ -11,6 +11,7 @@ import PhoneScreen from '../screens/auth/PhoneScreen';
 import PinScreen from '../screens/auth/PinScreen';
 import RegisterScreen from '../screens/auth/RegisterScreen';
 import SetPasswordScreen from '../screens/auth/SetPasswordScreen';
+import StockDetail from '../screens/stocks/StockDetail';
 import BottomTab from './BottomTab';
 
 export const authStacks = [
@@ -72,6 +73,10 @@ export const dashboardStack = [
   {
     name: 'BottomTab',
     component: BottomTab,
+  },
+  {
+    name: 'StockDetail',
+    component: StockDetail,
   },
 ];
 
