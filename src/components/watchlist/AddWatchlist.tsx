@@ -1,5 +1,5 @@
-import React, {FC} from 'react';
-import {Tabs} from 'react-native-collapsible-tab-view';
+import React, { FC } from "react";
+import { Tabs } from "react-native-collapsible-tab-view";
 
 const AddWatchlist: FC = () => {
   return (

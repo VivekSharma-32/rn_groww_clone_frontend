@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import CustomText from '../global/CustomText';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useTheme} from '@react-navigation/native';
-import {FONTS} from '../../constants/Fonts';
-import {Colors} from '../../constants/Colors';
-import TouchableText from '../auth/TouchableText';
-import {checkBiometrics} from '../../utils/BiometricsUtils';
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import CustomText from "../global/CustomText";
+import Icon from "react-native-vector-icons/Ionicons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useTheme } from "@react-navigation/native";
+import { FONTS } from "../../constants/Fonts";
+import { Colors } from "../../constants/Colors";
+import TouchableText from "../auth/TouchableText";
+import { checkBiometrics } from "../../utils/BiometricsUtils";
 
 interface NumberPadProps {
   onPressNumber: (number: number | string) => void;
@@ -28,10 +28,10 @@ const CustomNumberPad: React.FC<NumberPadProps> = ({
   themeColor,
   onPressBiometric,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const [biometricType, setBiometricType] = useState<string | null>();
   useEffect(() => {
-    checkBiometrics().then(bt => {
+    checkBiometrics().then((bt) => {
       setBiometricType(bt);
     });
   }, []);
@@ -47,7 +47,8 @@ const CustomNumberPad: React.FC<NumberPadProps> = ({
           {
             color: isBiometric || themeColor ? Colors.themeColor : colors.text,
           })
-        }>
+        }
+      >
         {label}
       </CustomText>
     </TouchableOpacity>
@@ -69,7 +70,7 @@ const CustomNumberPad: React.FC<NumberPadProps> = ({
           style={styles.touchText}
           onPress={onPressBiometric}
           firstText={`Use ${
-            biometricType == 'Biometrics' ? 'Fingerprint' : biometricType
+            biometricType == "Biometrics" ? "Fingerprint" : biometricType
           }`}
         />
       )}
@@ -90,11 +91,11 @@ const CustomNumberPad: React.FC<NumberPadProps> = ({
       </View>
       <View style={styles.row}>
         {renderIconButton(
-          isBiometric || themeColor ? 'backspace' : 'backspace-outline',
-          onPressBackspace,
+          isBiometric || themeColor ? "backspace" : "backspace-outline",
+          onPressBackspace
         )}
         {renderButton(0, () => onPressNumber(0))}
-        {renderIconButton('checkmark-sharp', onPressCheckmark)}
+        {renderIconButton("checkmark-sharp", onPressCheckmark)}
       </View>
     </View>
   );
@@ -102,28 +103,28 @@ const CustomNumberPad: React.FC<NumberPadProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
   },
   touchText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontFamily: FONTS.Medium,
     marginBottom: 5,
   },
   row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     marginTop: 10,
   },
   button: {
     borderRadius: 5,
-    width: '40%',
+    width: "40%",
     height: 50,
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 20,

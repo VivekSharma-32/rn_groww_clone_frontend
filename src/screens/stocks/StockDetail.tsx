@@ -1,23 +1,23 @@
-import {StyleSheet, ScrollView, View} from 'react-native';
-import React, {FC, useEffect, useState} from 'react';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import Details from './Details';
-import TimeFrame from '../../components/charts/TimeFrame';
-import MediumChart from '../../components/charts/linechart/MediumChart';
-import DetailTab from '../../components/stockdetails/DetailTab';
-import Overview from '../../components/stockdetails/Overview';
-import {screenHeight} from '../../utils/Scaling';
-import {getSignPaisa} from '../../utils/NumberUtils';
-import {ParamListBase, RouteProp, useRoute} from '@react-navigation/native';
-import {navigate} from '../../utils/NavigationUtil';
-import {useWS} from '../../utils/WSProvider';
-import StockDetailHeader from '../../components/global/StockDetailHeader';
-import TradeChart from '../../components/charts/candlechart/TradeChart';
-import FutureAndOption from '../../components/stockdetails/FutureAndOption';
+import { StyleSheet, ScrollView, View } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import StockDetailHeader from "../../components/headers/StockDetailHeader";
+import Details from "./Details";
+import TimeFrame from "../../components/charts/TimeFrame";
+import MediumChart from "../../components/charts/linechart/MediumChart";
+import DetailTab from "../../components/stockdetails/DetailTab";
+import Overview from "../../components/stockdetails/Overview";
+import { screenHeight } from "../../utils/Scaling";
+import FutureAndOption from "../../components/stockdetails/FutureAndOptions";
+import { getSignPaisa } from "../../utils/NumberUtils";
+import TradeChart from "../../components/charts/candlechart/TradeChart";
+import { ParamListBase, RouteProp, useRoute } from "@react-navigation/native";
+import { navigate } from "../../utils/NavigationUtil";
+import { useWS } from "../../utils/WSProvider";
 interface ParamsType {
   stock?: any;
 }
-const tabs = ['Overview', 'F&O'];
+const tabs = ["Overview", "F&O"];
 
 type Stock = {
   __v: number;
@@ -49,9 +49,9 @@ const StockDetail: FC = () => {
   const [stockSocketData, setSocketStockData] = useState<Stock | any>(null);
   useEffect(() => {
     if (socketService && stockData.symbol) {
-      socketService.emit('subscribeToStocks', stockData.symbol);
+      socketService.emit("subscribeToStocks", stockData.symbol);
 
-      socketService.on(stockData.symbol, data => {
+      socketService.on(stockData.symbol, (data) => {
         setSocketStockData(data);
       });
 
@@ -62,15 +62,15 @@ const StockDetail: FC = () => {
   const priceChange =
     stockSocketData?.currentPrice - stockSocketData?.lastDayTradedPrice;
   const percentageChange = Math.abs(
-    (priceChange / stockSocketData?.lastDayTradedPrice) * 100,
+    (priceChange / stockSocketData?.lastDayTradedPrice) * 100
   ).toFixed(2);
 
   const [isVisible, setIsVisible] = useState(false);
   const [chartDataLoading, setChartDataLoading] = useState(false);
 
-  const [currentTimeFrame, setCurrentTimeFrame] = useState('1D');
+  const [currentTimeFrame, setCurrentTimeFrame] = useState("1D");
   const [currentTab, setCurrentTab] = useState(0);
-  const [chartMode, setChartMode] = useState('line');
+  const [chartMode, setChartMode] = useState("line");
 
   const handleScroll = (event: any) => {
     const scrollPosition = event.nativeEvent.contentOffset.y;
@@ -85,9 +85,9 @@ const StockDetail: FC = () => {
   };
 
   const onPressExpandHandler = () => {
-    const {tenMinTimeSeries, dayTimeSeries, ...stockWithoutTimeSeries} =
+    const { tenMinTimeSeries, dayTimeSeries, ...stockWithoutTimeSeries } =
       stockData as Stock;
-    navigate('TradingView', {stock: stockWithoutTimeSeries});
+    navigate("TradingView", { stock: stockWithoutTimeSeries });
   };
 
   return (
@@ -104,8 +104,9 @@ const StockDetail: FC = () => {
       <ScrollView
         onScroll={handleScroll}
         scrollEventThrottle={16}
-        showsVerticalScrollIndicator={false}>
-        <View style={[styles.subContainer, {paddingTop: 0}]}>
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={[styles.subContainer, { paddingTop: 0 }]}>
           <Details
             data={{
               companyName: stockData?.companyName,
@@ -115,13 +116,13 @@ const StockDetail: FC = () => {
               iconUrl: stockData?.iconUrl,
             }}
           />
-          {chartMode == 'line' ? (
+          {chartMode == "line" ? (
             <MediumChart
               data={stockSocketData?.tenMinTimeSeries.map(
-                ({close, time}: any) => ({
+                ({ close, time }: any) => ({
                   value: close,
                   time: time,
-                }),
+                })
               )}
               loading={chartDataLoading}
               color={getSignPaisa(priceChange).color}
@@ -138,23 +139,25 @@ const StockDetail: FC = () => {
           <TimeFrame
             chartMode={chartMode}
             currentTimeFrame={currentTimeFrame}
-            onSetChartMode={async type => {
+            onSetChartMode={async (type) => {
               setChartDataLoading(true);
               setTimeout(() => {
                 setChartMode(type);
                 setChartDataLoading(false);
               }, 500);
             }}
-            onSetCurrentTimeFrame={timeframe => setCurrentTimeFrame(timeframe)}
+            onSetCurrentTimeFrame={(timeframe) =>
+              setCurrentTimeFrame(timeframe)
+            }
           />
         </View>
-        <ScrollView horizontal contentContainerStyle={{width: '100%'}}>
+        <ScrollView horizontal contentContainerStyle={{ width: "100%" }}>
           {tabs.map((item, index) => {
             const tabWidth = (1 / tabs?.length) * 100;
             return (
               <DetailTab
                 key={index}
-                style={{width: `${tabWidth}%`}}
+                style={{ width: `${tabWidth}%` }}
                 onPress={() => setCurrentTab(index)}
                 label={item}
                 focused={currentTab == index}

@@ -1,13 +1,13 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React, {FC} from 'react';
-import CustomText from './CustomText';
-import {FONTS} from '../../constants/Fonts';
+import { View, Text, StyleSheet } from "react-native";
+import React, { FC } from "react";
+import CustomText from "./CustomText";
+import { FONTS } from "../../constants/Fonts";
 
 interface InfoTextProps {
   data: string[];
 }
 
-const InfoText: FC<InfoTextProps> = ({data}) => {
+const InfoText: FC<InfoTextProps> = ({ data }) => {
   return (
     <View style={styles.container}>
       {data?.map((item, index) => {
@@ -16,7 +16,8 @@ const InfoText: FC<InfoTextProps> = ({data}) => {
             key={index}
             variant="h9"
             fontFamily={FONTS.Regular}
-            style={styles.text}>
+            style={styles.text}
+          >
             {item}
           </CustomText>
         );
@@ -28,14 +29,14 @@ const InfoText: FC<InfoTextProps> = ({data}) => {
 const styles = StyleSheet.create({
   text: {
     opacity: 0.7,
-    textAlign: 'center',
-    marginBottom: 5,
+    textAlign: "center",
+    marginBottom:5
   },
   container: {
-    marginTop: 25,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop:25,
+    alignSelf: "center",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

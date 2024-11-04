@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,14 +6,14 @@ import {
   TextInput,
   Platform,
   TextStyle,
-  useColorScheme,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon2 from 'react-native-vector-icons/Ionicons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Colors} from '../../constants/Colors';
-import {FONTS} from '../../constants/Fonts';
-import {useTheme} from '@react-navigation/native';
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon2 from "react-native-vector-icons/Ionicons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Colors } from "../../constants/Colors";
+import { FONTS } from "../../constants/Fonts";
+import { useTheme } from "@react-navigation/native";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 interface InputProps {
   label?: string;
@@ -51,10 +51,10 @@ const CustomInput: React.FC<
   onFocus = () => {},
   ...props
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const [isFocused, setIsFocused] = useState(false);
   const [hideEyeIcon, setHideEyeIcon] = useState(true);
-  const theme = useColorScheme();
+  const theme = useCustomColorScheme();
   return (
     <View style={styles.inputMainContainer}>
       {label && (
@@ -62,9 +62,10 @@ const CustomInput: React.FC<
           <Text
             style={[
               styles.label,
-              {color: colors.text, opacity: theme == 'dark' ? 1 : 0.4},
-            ]}>
-            {label} {required && '*'}
+              { color: colors.text, opacity: theme == "dark" ? 1 : 0.4 },
+            ]}
+          >
+            {label} {required && "*"}
           </Text>
           {rightText}
         </View>
@@ -75,7 +76,6 @@ const CustomInput: React.FC<
           styles.inputContainer,
 
           {
-            ...containerStyle,
             borderColor: error
               ? Colors.errorColor
               : isFocused
@@ -83,17 +83,19 @@ const CustomInput: React.FC<
               : Colors.dark_border,
             borderBottomWidth: isFocused ? 2 : 1,
           },
-        ]}>
+          containerStyle,
+        ]}
+      >
         {leftIcon}
         <TextInput
-          placeholderTextColor={theme == 'dark' ? '#dadbde' : '#cfd0d3'}
+          placeholderTextColor={theme == "dark" ? "#dadbde" : "#cfd0d3"}
           style={[
             styles.textInput,
             {
-              ...textInputStyle,
-              textAlignVertical: textTop ? 'top' : 'center',
+              textAlignVertical: textTop ? "top" : "center",
               color: colors.text,
             },
+            textInputStyle,
           ]}
           secureTextEntry={password ? hideEyeIcon : false}
           autoCorrect={false}
@@ -115,7 +117,7 @@ const CustomInput: React.FC<
             onPress={() => {
               setHideEyeIcon(!hideEyeIcon);
             }}
-            name={!hideEyeIcon ? 'eye' : 'eye-off'}
+            name={!hideEyeIcon ? "eye" : "eye-off"}
             style={styles.password}
             color={colors.text}
           />
@@ -142,43 +144,43 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 3,
     gap: 5,
   },
   errorText: {
     color: Colors.errorColor,
-    fontSize: Platform.OS === 'ios' ? RFValue(11) : RFValue(11),
+    fontSize: Platform.OS === "ios" ? RFValue(11) : RFValue(11),
     fontFamily: FONTS.Medium,
   },
   label: {
-    fontSize: Platform.OS === 'ios' ? RFValue(9) : RFValue(9),
+    fontSize: Platform.OS === "ios" ? RFValue(9) : RFValue(9),
     fontFamily: FONTS.Regular,
   },
   labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     marginBottom: 2,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 4,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   textInput: {
     fontFamily: FONTS.Regular,
-    fontSize: Platform.OS === 'ios' ? RFValue(11) : RFValue(13),
-    alignItems: 'flex-start',
+    fontSize: Platform.OS === "ios" ? RFValue(11) : RFValue(13),
+    alignItems: "flex-start",
     height: 28,
-    width: '82%',
+    width: "82%",
     paddingVertical: 5,
   },
   password: {
-    textAlignVertical: 'center',
+    textAlignVertical: "center",
     opacity: 0.8,
   },
 });

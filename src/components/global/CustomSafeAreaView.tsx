@@ -1,14 +1,16 @@
-import {SafeAreaView, StyleSheet, View, ViewStyle} from 'react-native';
-import React, {FC, ReactNode} from 'react';
-import BackButton from './BackButton';
-import NoInternet from './NoInternet';
+import { SafeAreaView, StyleSheet, View, ViewStyle } from "react-native";
+import React, { FC, ReactNode } from "react";
+import NoInternet from "./NoInternet";
 
 interface CustomSafeAreaViewProps {
   children: ReactNode;
   style?: ViewStyle;
 }
 
-const CustomSafeAreaView: FC<CustomSafeAreaViewProps> = ({children, style}) => {
+const CustomSafeAreaView: FC<CustomSafeAreaViewProps> = ({
+  children,
+  style,
+}) => {
   return (
     <>
       <SafeAreaView style={[styles.container, style]}>

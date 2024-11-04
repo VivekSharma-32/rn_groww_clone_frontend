@@ -1,30 +1,30 @@
-import React, {FC} from 'react';
-import Svg from 'react-native-svg';
-import * as d3 from 'd3-scale';
-import {Gesture, GestureDetector} from 'react-native-gesture-handler';
+import React, { FC } from "react";
+import Svg from "react-native-svg";
+import * as d3 from "d3-scale";
+import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   useDerivedValue,
-} from 'react-native-reanimated';
-import {StyleSheet, View} from 'react-native';
-import Candle from './Candle';
-import {ReText} from 'react-native-redash';
-import {useTheme} from '@react-navigation/native';
-import {FONTS} from '../../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {convertUnixTimeWorklet} from '../../../utils/ValidationUtils';
-import {formatPaisaWorklet} from '../../../utils/NumberUtils';
-import PointerValuesGroup from './PointerValuesGroup';
-import {screenWidth} from '../../../utils/Scaling';
-import StripLine from './StripeLine';
+} from "react-native-reanimated";
+import { StyleSheet, View } from "react-native";
+import Candle from "./Candle";
+import StripLine from "./StripLine";
+import { ReText } from "react-native-redash";
+import { useTheme } from "@react-navigation/native";
+import { FONTS } from "../../../constants/Fonts";
+import { RFValue } from "react-native-responsive-fontsize";
+import { convertUnixTimeWorklet } from "../../../utils/ValidationUtils";
+import { formatPaisaWorklet } from "../../../utils/NumberUtils";
+import PointerValuesGroup from "./PointerValuesGroup";
+import { screenWidth } from "../../../utils/Scaling";
 
-const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
+const CandleChart: FC<{ data: any[]; height: number; width: number }> = ({
   data,
   height,
   width,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const opacity = useSharedValue(0);
 
   const chartHeight = height;
@@ -37,8 +37,8 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
   const scaleY = d3
     .scaleLinear()
     .domain([
-      Math.min(...data?.map(d => d.low)),
-      Math.max(...data?.map(d => d.high)),
+      Math.min(...data?.map((d) => d.low)),
+      Math.max(...data?.map((d) => d.high)),
     ])
     .range([chartHeight, 0]);
 
@@ -46,16 +46,16 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
   const textPad = useSharedValue(0);
 
   const panGesture = Gesture.Pan()
-    .onUpdate(e => {
+    .onUpdate((e) => {
       const candleIndex = Math.floor(
-        (e.x + candleXSpacing / 2) / (candleWidth + candleXSpacing),
+        (e.x + candleXSpacing / 2) / (candleWidth + candleXSpacing)
       );
       const newX = candleIndex * (candleWidth + candleXSpacing) + 2;
       position.value = newX;
       textPad.value = e.x < 80 ? 0 : e.x > 260 ? -100 : -50;
       opacity.value = 1;
     })
-    .onTouchesDown(e => {
+    .onTouchesDown((e) => {
       opacity.value = 0;
     });
 
@@ -66,27 +66,27 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
 
   const pointValueStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    display: opacity.value == 0 ? 'none' : 'flex',
+    display: opacity.value == 0 ? "none" : "flex",
   }));
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [{translateX: position.value}],
+    transform: [{ translateX: position.value }],
   }));
 
   const formatData = (value: any) => {
-    'worklet';
+    "worklet";
     if (!value) {
-      return '';
+      return "";
     }
     const time = value?.time;
     return `₹${value.close} | ${convertUnixTimeWorklet(time)}`;
   };
 
   const scaleYInvert = (y: number) => {
-    'worklet';
+    "worklet";
     const hoveredIndex = Math.floor(
-      (position.value + candleXSpacing / 2) / (candleWidth + candleXSpacing),
+      (position.value + candleXSpacing / 2) / (candleWidth + candleXSpacing)
     );
     return data[hoveredIndex];
   };
@@ -128,10 +128,11 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
             left: -20,
             padding: 20,
             right: 0,
-            alignSelf: 'center',
+            alignSelf: "center",
           },
           pointValueStyle,
-        ]}>
+        ]}
+      >
         <PointerValuesGroup
           openValue={openValue}
           closeValue={closeValue}
@@ -158,7 +159,8 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
             <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
               <StripLine y={height} />
               <Animated.View
-                style={[StyleSheet.absoluteFill, reTextAnimatedStyle]}>
+                style={[StyleSheet.absoluteFill, reTextAnimatedStyle]}
+              >
                 <ReText
                   style={{
                     color: colors.text,
@@ -166,7 +168,7 @@ const CandleChart: FC<{data: any[]; height: number; width: number}> = ({
                     fontSize: RFValue(9),
                     top: -20,
                   }}
-                  {...{text}}
+                  {...{ text }}
                 />
               </Animated.View>
             </Animated.View>

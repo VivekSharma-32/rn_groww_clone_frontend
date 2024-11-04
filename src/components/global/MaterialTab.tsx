@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import {Colors} from '../../constants/Colors';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import React, { FC } from "react";
+import { TouchableOpacity, StyleSheet } from "react-native";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import { Colors } from "../../constants/Colors";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 interface MaterialTabProps {
   focused: boolean;
@@ -11,7 +11,7 @@ interface MaterialTabProps {
   label: string;
 }
 
-const MaterialTab: FC<MaterialTabProps> = ({focused, onPress, label}) => {
+const MaterialTab: FC<MaterialTabProps> = ({ focused, onPress, label }) => {
   return (
     <TouchableOpacity
       style={[
@@ -21,11 +21,13 @@ const MaterialTab: FC<MaterialTabProps> = ({focused, onPress, label}) => {
           borderColor: Colors.profit,
         },
       ]}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <CustomText
-        style={{opacity: focused ? 1 : 0.6}}
+        style={{ opacity: focused ? 1 : 0.6 }}
         fontSize={RFPercentage(1.5)}
-        fontFamily={FONTS.Medium}>
+        fontFamily={FONTS.Medium}
+      >
         {label}
       </CustomText>
     </TouchableOpacity>

@@ -4,15 +4,15 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
-} from 'react-native';
-import React, {FC} from 'react';
-import {Colors} from '../../../constants/Colors';
-import {screenHeight} from '../../../utils/Scaling';
-import {useTheme} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {lineDataItem} from 'react-native-gifted-charts';
-import PointerChart from './PointerChart';
+} from "react-native";
+import React, { FC } from "react";
+import { Colors } from "../../../constants/Colors";
+import { screenHeight } from "../../../utils/Scaling";
+import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { RFValue } from "react-native-responsive-fontsize";
+import PointerChart from "./PointerChart";
+import { lineDataItem } from "react-native-gifted-charts";
 
 const height = screenHeight * 0.28;
 interface MediumChartProps {
@@ -27,7 +27,7 @@ const MediumChart: FC<MediumChartProps> = ({
   color,
   onPressExpand,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       {loading ? (
@@ -36,18 +36,20 @@ const MediumChart: FC<MediumChartProps> = ({
         <View
           style={{
             height: height,
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
             paddingTop: 100,
-            overflow: 'hidden',
-          }}>
+            overflow: "hidden",
+          }}
+        >
           <PointerChart color={color} data={data} height={height} />
         </View>
       )}
       <TouchableOpacity
         onPress={onPressExpand}
-        style={[styles.absoluteBtn, {backgroundColor: colors.card}]}>
+        style={[styles.absoluteBtn, { backgroundColor: colors.card }]}
+      >
         <Icon name="zoom-out-map" color={Colors.profit} size={RFValue(16)} />
       </TouchableOpacity>
     </View>
@@ -56,14 +58,14 @@ const MediumChart: FC<MediumChartProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     height: height,
   },
   absoluteBtn: {
     padding: 6,
     borderRadius: 50,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     bottom: 4,
   },

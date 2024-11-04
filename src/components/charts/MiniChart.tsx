@@ -1,13 +1,13 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import Svg, {Path} from 'react-native-svg';
+import React, { FC } from "react";
+import { View, StyleSheet } from "react-native";
+import Svg, { Path } from "react-native-svg";
 
 interface MiniChartsProps {
   color: string;
   stockData: number[];
 }
 
-const MiniChart: FC<MiniChartsProps> = ({color, stockData}) => {
+const MiniChart: FC<MiniChartsProps> = ({ color, stockData }) => {
   const containerWidth = 80;
   const containerHeight = 20;
   const maxValue = Math.max(...stockData);
@@ -24,9 +24,9 @@ const MiniChart: FC<MiniChartsProps> = ({color, stockData}) => {
             stockData
               .slice(1)
               .map(
-                (point, index) => ` L${(index + 1) * 10},${scaleYChart(point)}`,
+                (point, index) => ` L${(index + 1) * 10},${scaleYChart(point)}`
               )
-              .join('')
+              .join("")
           }
           stroke={color}
           strokeWidth="1.5"
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     width: 40,
     height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

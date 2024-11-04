@@ -1,14 +1,14 @@
-import {View, StyleSheet} from 'react-native';
-import React from 'react';
-import {useTheme} from '@react-navigation/native';
-import CustomText from '../global/CustomText';
+import { View, StyleSheet } from "react-native";
+import React from "react";
+import { useTheme } from "@react-navigation/native";
+import CustomText from "../global/CustomText";
 
 const EtcDataItem = () => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
-    <View style={[styles.itemContainer, {borderColor: colors.notification}]}>
+    <View style={[styles.itemContainer, { borderColor: colors.notification }]}>
       <CustomText variant="h7">Stock Data</CustomText>
-      <CustomText variant="h9" style={{opacity: 0.7, marginTop: 5}}>
+      <CustomText variant="h9" style={{ opacity: 0.7, marginTop: 5 }}>
         Information about other Stock and fno details and info
       </CustomText>
     </View>

@@ -1,14 +1,18 @@
-import {View, Text, TouchableOpacity, StyleSheet, Animated} from 'react-native';
-import React, {FC, useEffect, useState} from 'react';
-import {useTheme} from '@react-navigation/native';
-import CustomText from './CustomText';
-import {FONTS} from '../../constants/Fonts';
+import { StyleSheet, Animated, ViewStyle } from "react-native";
+import React, { FC, useEffect, useState } from "react";
+import { useTheme } from "@react-navigation/native";
+import CustomText from "./CustomText";
+import { FONTS } from "../../constants/Fonts";
+import { Colors as colorw } from "../../constants/Colors";
+import TouchableRipple from "react-native-material-ripple";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 interface CustomButtonProps {
   text: string;
   loading: boolean;
   disabled: boolean;
   onPress: () => void;
+  style?: ViewStyle;
 }
 
 const CustomButton: FC<CustomButtonProps> = ({
@@ -16,8 +20,10 @@ const CustomButton: FC<CustomButtonProps> = ({
   loading,
   disabled,
   onPress,
+  style,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
+  const theme = useCustomColorScheme();
   const [animatedValue, setAnimatedValue] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -26,23 +32,43 @@ const CustomButton: FC<CustomButtonProps> = ({
       Animated.loop(
         Animated.timing(animatedValue, {
           toValue: 1,
-          duration: 1500,
+          duration: 1800,
           useNativeDriver: true,
-        }),
+        })
       ).start();
     } else {
       animatedValue.stopAnimation();
     }
-  }, [loading, animatedValue]);
+  }, [loading]);
+
+  const translateX = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-500, 500],
+  });
+
   return (
-    <TouchableOpacity
+    <TouchableRipple
       disabled={disabled}
       onPress={onPress}
+      rippleColor="#fff"
       style={[
         styles.btn,
-        {backgroundColor: loading || disabled ? colors.card : colors.primary},
-      ]}>
-      <CustomText fontFamily={FONTS.Medium} variant="h5">
+        {
+          backgroundColor:
+            loading || disabled
+              ? theme == "dark"
+                ? colors.card
+                : "#DFDFDF"
+              : colorw.profit,
+        },
+        style,
+      ]}
+    >
+      <CustomText
+        fontFamily={FONTS.Bold}
+        variant="h6"
+        style={{ color: "white" }}
+      >
         {text}
       </CustomText>
       {loading && (
@@ -50,40 +76,32 @@ const CustomButton: FC<CustomButtonProps> = ({
           style={[
             styles.loadingIndicator,
             {
-              transform: [
-                {
-                  translateX: animatedValue.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [-500, 500],
-                  }),
-                },
-              ],
+              transform: [{ translateX }],
             },
           ]}
         />
       )}
-    </TouchableOpacity>
+    </TouchableRipple>
   );
 };
 
 const styles = StyleSheet.create({
   btn: {
-    padding: 5,
-    width: '100%',
+    padding: 14,
+    width: "100%",
     borderRadius: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-    overflow: 'hidden',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    overflow: "hidden",
   },
   loadingIndicator: {
-    position: 'absolute',
-    bottom: 0,
+    position: "absolute",
+    top: 0,
     left: 0,
-    right: 0,
     height: 2,
-    backgroundColor: 'red',
-    width: '100%',
+    backgroundColor: colorw.profit,
+    width: "100%",
   },
 });
 

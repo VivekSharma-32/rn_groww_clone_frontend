@@ -1,92 +1,134 @@
-import {View, Text, StyleSheet, Platform} from 'react-native';
-import React from 'react';
-import {Colors} from '../../constants/Colors';
-import {useTheme} from '@react-navigation/native';
-import {normalizeWidth} from '../../utils/Scaling';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import {formatPaisaWithCommas, getSignPaisa} from '../../utils/NumberUtils';
-import {holdingsData} from '../../utils/staticData';
+import { View, StyleSheet, Platform } from "react-native";
+import React, { FC, useEffect, useState, useCallback } from "react";
+import { useTheme } from "@react-navigation/native";
+import { normalizeWidth } from "../../utils/Scaling";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import { formatPaisaWithCommas, getSignPaisa } from "../../utils/NumberUtils";
+import { useWS } from "../../utils/WSProvider";
 
-const HoldingCard = () => {
-  const {colors} = useTheme();
+interface HoldingProps {
+  data: Record<string, any>[];
+}
 
-  const totalReturns = holdingsData.reduce(
-    (total, {invested, current}) => total + (current - invested),
-    0,
+const HoldingCard: FC<HoldingProps> = React.memo(({ data }) => {
+  const { colors } = useTheme();
+  const socketService = useWS();
+
+  const [summary, setSummary] = useState({
+    totalInvested: 0,
+    totalCurrentValue: 0,
+    totalLastDayValue: 0,
+    totalReturns: 0,
+    oneDayReturn: 0,
+    totalReturnsPercentageChange: "",
+    dayReturnsPercentageChange: "",
+  });
+
+  useEffect(() => {
+    if (socketService && data.length > 0) {
+      const symbols = data.map((holding) => holding.stock.symbol);
+      socketService.emit("subscribeToMultipleStocks", symbols as any);
+
+      const handleMultipleStocksData = (stocksData: any) => {
+        updateSummary(stocksData);
+      };
+
+      socketService.on("multipleStocksData", handleMultipleStocksData);
+
+      return () => {
+        socketService.off("multipleStocksData");
+      };
+    }
+  }, [socketService, data]);
+
+  const updateSummary = useCallback(
+    (stocksData: any) => {
+      let totalInvested = 0;
+      let totalCurrentValue = 0;
+      let totalLastDayValue = 0;
+
+      data.forEach((holding) => {
+        const invested = holding.buyPrice * holding.quantity;
+        const stockData = stocksData.find(
+          (stock: any) => stock.symbol === holding.stock.symbol
+        );
+        if (stockData) {
+          const currentValue = stockData.currentPrice * holding.quantity;
+          const lastDayValue =
+            invested - stockData.lastDayTradedPrice * holding.quantity;
+          totalInvested += invested;
+          totalCurrentValue += currentValue;
+          totalLastDayValue += lastDayValue;
+        }
+      });
+
+      const totalReturns = totalCurrentValue - totalInvested;
+      const oneDayReturn = totalReturns - totalLastDayValue;
+
+      const totalReturnsPercentageChange = (
+        (totalReturns / totalInvested) *
+        100
+      ).toFixed(2);
+      const dayReturnsPercentageChange = (
+        (oneDayReturn / totalLastDayValue) *
+        100
+      ).toFixed(2);
+
+      setSummary({
+        totalInvested,
+        totalCurrentValue,
+        totalLastDayValue,
+        totalReturns,
+        oneDayReturn,
+        totalReturnsPercentageChange,
+        dayReturnsPercentageChange,
+      });
+    },
+    [data]
   );
-
-  const dayReturns = holdingsData.reduce(
-    (total, {dayReturn}) => total + dayReturn,
-    0,
-  );
-
-  const totalInvested = holdingsData.reduce(
-    (total, {invested}) => total + invested,
-    0,
-  );
-
-  const totalCurrent = holdingsData.reduce(
-    (total, {current}) => total + current,
-    0,
-  );
-
-  const totalReturnsPercentageChange = Math.abs(
-    (totalReturns / totalInvested) * 100,
-  ).toFixed(2);
-
-  const dayReturnsPercentageChange = Math.abs(
-    (dayReturns / totalInvested) * 100,
-  ).toFixed(2);
 
   return (
     <View
       style={[
-        styles.holdingContainer,
+        styles.holdingsContainer,
         {
           borderColor: colors.border,
         },
-      ]}>
+      ]}
+    >
       <View style={styles.flexRowCenter}>
         <View>
           <CustomText variant="h9" fontFamily={FONTS.Regular}>
-            Current
+            Current Value
           </CustomText>
-
-          <CustomText
-            variant="h8"
-            style={{marginTop: 2}}
-            fontFamily={FONTS.Regular}>
-            {formatPaisaWithCommas(totalCurrent)}
+          <CustomText variant="h8" style={styles.currentValueText}>
+            {summary.totalCurrentValue
+              ? formatPaisaWithCommas(summary.totalCurrentValue)
+              : "-"}
           </CustomText>
         </View>
 
         <View>
           <CustomText
             variant="h9"
+            style={styles.rightAlignedText}
             fontFamily={FONTS.Regular}
-            style={{textAlign: 'right'}}>
+          >
             Total Returns
           </CustomText>
-
           <CustomText
             variant="h8"
-            style={{marginTop: 2, color: getSignPaisa(totalReturns).color}}
-            fontFamily={FONTS.Regular}>
-            {getSignPaisa(totalReturns).paisa} ({totalReturnsPercentageChange}%)
-          </CustomText>
-        </View>
-
-        <View>
-          <CustomText variant="h9" fontFamily={FONTS.Regular}>
-            Current
-          </CustomText>
-
-          <CustomText
-            variant="h8"
-            style={{marginTop: 2}}
-            fontFamily={FONTS.Regular}>
-            {formatPaisaWithCommas(totalCurrent)}
+            style={{
+              marginTop: 2,
+              color: getSignPaisa(summary.totalReturns).color,
+            }}
+          >
+            {summary.totalReturns
+              ? `${getSignPaisa(summary.totalReturns).paisa} (${
+                  summary.totalReturnsPercentageChange
+                }%)`
+              : "-"}
           </CustomText>
         </View>
       </View>
@@ -94,68 +136,72 @@ const HoldingCard = () => {
       <View style={styles.flexRowCenter2}>
         <View>
           <CustomText variant="h9" fontFamily={FONTS.Regular}>
-            Invested
+            Invested Amount
           </CustomText>
-
-          <CustomText
-            variant="h8"
-            style={{marginTop: 2}}
-            fontFamily={FONTS.Regular}>
-            {formatPaisaWithCommas(totalInvested)}
+          <CustomText variant="h8" style={styles.investedAmountText}>
+            {summary.totalInvested
+              ? formatPaisaWithCommas(summary.totalInvested)
+              : "-"}
           </CustomText>
         </View>
 
         <View>
           <CustomText
             variant="h9"
+            style={styles.rightAlignedText}
             fontFamily={FONTS.Regular}
-            style={{textAlign: 'right'}}>
-            1D Returns
+          >
+            1-Day Returns
           </CustomText>
-
           <CustomText
             variant="h8"
-            style={{marginTop: 2, color: getSignPaisa(dayReturns).color}}
-            fontFamily={FONTS.Regular}>
-            {getSignPaisa(dayReturns).paisa} ({dayReturnsPercentageChange}%)
-          </CustomText>
-        </View>
-
-        <View>
-          <CustomText variant="h9" fontFamily={FONTS.Regular}>
-            Current
-          </CustomText>
-
-          <CustomText
-            variant="h8"
-            style={{marginTop: 2}}
-            fontFamily={FONTS.Regular}>
-            {formatPaisaWithCommas(totalCurrent)}
+            style={{
+              marginTop: 2,
+              color: getSignPaisa(summary.oneDayReturn).color,
+            }}
+          >
+            {summary.oneDayReturn
+              ? `${getSignPaisa(summary.oneDayReturn).paisa} (${
+                  summary.dayReturnsPercentageChange
+                }%)`
+              : "-"}
           </CustomText>
         </View>
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  holdingContainer: {
+  holdingsContainer: {
     paddingHorizontal: 15,
     paddingVertical: 20,
     height: normalizeWidth(120),
-    borderWidth: Platform.OS === 'android' ? 1 : 1.5,
+    borderWidth: Platform.OS === "android" ? 1 : 0.5,
+    marginBottom: normalizeWidth(13),
+    borderRadius: 6,
   },
   flexRowCenter: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
     marginBottom: 15,
   },
   flexRowCenter2: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginBottom: 15,
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: 15,
+  },
+  currentValueText: {
+    marginTop: 2,
+  },
+  rightAlignedText: {
+    textAlign: "right",
+  },
+
+  investedAmountText: {
+    marginTop: 2,
   },
 });
 

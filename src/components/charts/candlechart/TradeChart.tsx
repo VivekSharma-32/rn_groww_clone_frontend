@@ -6,11 +6,12 @@ import {
 } from 'react-native';
 import React, {FC} from 'react';
 import {Colors} from '../../../constants/Colors';
-import {screenHeight, screenWidth} from '../../../utils/Scaling';
+import {screenHeight} from '../../../utils/Scaling';
 import {useTheme} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {RFValue} from 'react-native-responsive-fontsize';
 import CandleChart from './CandleChart';
+import {screenWidth} from 'react-native-gifted-charts/dist/utils';
 
 const height = screenHeight * 0.28;
 interface TradeChartProps {

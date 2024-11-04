@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import CustomText from '../../components/global/CustomText';
-import {FONTS} from '../../constants/Fonts';
+import React, { useState } from "react";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import CustomText from "../../components/global/CustomText";
+import { FONTS } from "../../constants/Fonts";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -9,48 +9,48 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
-} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useTheme} from '@react-navigation/native';
-import CustomButton from '../../components/global/CustomButton';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Colors as colorw} from '../../constants/Colors';
-import OtpTimer from '../../components/auth/OtpTimer';
-import {useAppDispatch, useAppSelector} from '../../redux/reduxHook';
-import {SendOTP, VerifyOTP} from '../../redux/actions/userAction';
-import {useCustomColorScheme} from '../../navigation/Theme';
-import {selectUser} from '../../redux/reducers/userReducer';
+} from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useTheme } from "@react-navigation/native";
+import CustomButton from "../../components/global/CustomButton";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors as colorw } from "../../constants/Colors";
+import OtpTimer from "../../components/auth/OtpTimer";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHook";
+import { SendOTP, VerifyOTP } from "../../redux/actions/userAction";
+import { selectUser } from "../../redux/reducers/userSlice";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 const PhoneScreen = () => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const user = useAppSelector(selectUser);
   const theme = useCustomColorScheme();
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
   const dispatch = useAppDispatch();
   const handleSendOTP = async () => {
     setLoading(true);
-    await dispatch(SendOTP({email: user.email || '', otp_type: 'phone'}));
+    await dispatch(SendOTP({ email: user.email || "", otp_type: "phone" }));
     setOtpSent(true);
     setLoading(false);
   };
 
   const handleVerifyOTP = async () => {
     if (!otp) {
-      setOtpError('Enter OTP');
+      setOtpError("Enter OTP");
       return;
     }
     setLoading(true);
     await dispatch(
       VerifyOTP({
-        email: user.email || '',
-        otp_type: 'phone',
+        email: user.email || "",
+        otp_type: "phone",
         data: phoneNumber,
         otp: otp,
-      }),
+      })
     );
     setLoading(false);
   };
@@ -66,13 +66,15 @@ const PhoneScreen = () => {
     <KeyboardAvoidingView
       keyboardVerticalOffset={10}
       behavior="padding"
-      style={styles.keyboardContainer}>
+      style={styles.keyboardContainer}
+    >
       <CustomSafeAreaView>
         <CustomText
           variant="h4"
           fontFamily={FONTS.Medium}
-          style={styles.mainContainer}>
-          {otpSent ? 'Verify your mobile number' : 'Enter mobile number'}
+          style={styles.mainContainer}
+        >
+          {otpSent ? "Verify your mobile number" : "Enter mobile number"}
         </CustomText>
 
         {otpSent ? (
@@ -98,7 +100,8 @@ const PhoneScreen = () => {
             <CustomText
               variant="h5"
               fontFamily={FONTS.NumberSemiBold}
-              style={{fontWeight: 'bold'}}>
+              style={{ fontWeight: "bold" }}
+            >
               +91
             </CustomText>
             <TextInput
@@ -107,11 +110,11 @@ const PhoneScreen = () => {
               keyboardType="phone-pad"
               placeholder="9999999999"
               maxLength={10}
-              style={[{color: colors.text}, styles.textInput]}
+              style={[{ color: colors.text }, styles.textInput]}
               value={phoneNumber}
-              onChangeText={text => {
+              onChangeText={(text) => {
                 setPhoneNumber(text);
-                setOtpError('');
+                setOtpError("");
               }}
             />
           </View>
@@ -124,18 +127,19 @@ const PhoneScreen = () => {
                 keyboardType="phone-pad"
                 placeholder="OTP"
                 maxLength={6}
-                style={[{color: colors.text}, styles.textInput]}
+                style={[{ color: colors.text }, styles.textInput]}
                 value={otp}
-                onChangeText={text => setOtp(text)}
+                onChangeText={(text) => setOtp(text)}
               />
             </View>
             <View style={styles.otpTimerContainer}>
               <TouchableOpacity
                 style={{
-                  backgroundColor: theme == 'dark' ? colors.card : '#ccc',
+                  backgroundColor: theme == "dark" ? colors.card : "#ccc",
                   padding: 8,
                   borderRadius: 5,
-                }}>
+                }}
+              >
                 <OtpTimer
                   style={{
                     fontSize: RFValue(10),
@@ -149,17 +153,19 @@ const PhoneScreen = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={{
-                  backgroundColor: theme == 'dark' ? colors.card : '#ccc',
+                  backgroundColor: theme == "dark" ? colors.card : "#ccc",
                   padding: 8,
                   borderRadius: 5,
-                }}>
+                }}
+              >
                 <CustomText
                   style={{
                     fontSize: RFValue(10),
                     color: colors.text,
                     opacity: 0.8,
                     fontFamily: FONTS.Regular,
-                  }}>
+                  }}
+                >
                   Get OTP via call
                 </CustomText>
               </TouchableOpacity>
@@ -177,7 +183,7 @@ const PhoneScreen = () => {
             </View>
           )}
           <CustomButton
-            text={otpSent ? 'VERIFY' : 'SEND OTP'}
+            text={otpSent ? "VERIFY" : "SEND OTP"}
             onPress={handlePress}
             loading={loading}
             disabled={loading}
@@ -190,25 +196,25 @@ const PhoneScreen = () => {
 
 const styles = StyleSheet.create({
   errorContainer: {
-    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+    backgroundColor: "rgba(255, 0, 0, 0.2)",
     padding: 10,
-    justifyContent: 'center',
+    justifyContent: "center",
     borderRadius: 4,
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 20,
   },
   btnContainer: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     flex: 1,
   },
   textInput: {
-    width: '90%',
-    fontWeight: 'bold',
+    width: "90%",
+    fontWeight: "bold",
     fontSize: RFValue(15),
   },
   phoneContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
     marginTop: 30,
     paddingLeft: 3,
@@ -220,13 +226,13 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   numberContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
   },
   otpTimerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 30,
     marginTop: 50,
   },

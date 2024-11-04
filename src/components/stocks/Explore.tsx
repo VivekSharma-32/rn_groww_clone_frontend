@@ -1,32 +1,32 @@
+import React, { FC, useEffect, useState } from "react";
 import {
-  View,
-  Text,
+  Image,
   RefreshControl,
   StyleSheet,
   TouchableOpacity,
-  Image,
-} from 'react-native';
-import React, {FC, useState} from 'react';
-import {Tabs} from 'react-native-collapsible-tab-view';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Colors} from '../../constants/Colors';
-import {useTheme} from '@react-navigation/native';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import DottedLine from '../../assets/images/dotted.png';
-import StockCard from './StockCard';
-import {mostBoughtData} from '../../utils/staticData';
-import ProductAndTools from './ProductAndTools';
-import GainerAndLoser from './GainerAndLoser';
-import InfoText from '../global/InfoText';
+  View,
+} from "react-native";
+import { Tabs } from "react-native-collapsible-tab-view";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Colors } from "../../constants/Colors";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import { useTheme } from "@react-navigation/native";
+import DottedLine from "../../assets/images/dotted.png";
+import StockCard from "./StockCard";
+import ProductAndTools from "./ProductAndTools";
+import GainerAndLoser from "./GainerAndLoser";
+import InfoText from "../global/InfoText";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHook";
+import { selectStocks } from "../../redux/reducers/stockSlice";
+import { getAllStocks } from "../../redux/actions/stockAction";
 
-interface SeparatorProps {
+interface SepratorProps {
   label: string;
   seeMore?: boolean;
 }
-
-const Separator: FC<SeparatorProps> = ({label, seeMore}) => {
-  const {colors} = useTheme();
+const Seprator: FC<SepratorProps> = ({ label, seeMore }) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.sectionContainer}>
       <CustomText fontFamily={FONTS.Medium} fontSize={RFValue(10)}>
@@ -42,7 +42,7 @@ const Separator: FC<SeparatorProps> = ({label, seeMore}) => {
             style={{
               height: 2,
               marginTop: 2,
-              width: '100%',
+              width: "100%",
               tintColor: colors.text,
             }}
           />
@@ -53,41 +53,51 @@ const Separator: FC<SeparatorProps> = ({label, seeMore}) => {
 };
 
 const Explore = () => {
-  const [refreshing, setRefreshing] = useState(false);
+  const dispatch = useAppDispatch();
+  const stockData = useAppSelector(selectStocks);
+  const [refereshing, setRefreshing] = useState(false);
   const refreshHandler = async () => {
+    await fetchStocks();
     setRefreshing(false);
   };
+
+  const fetchStocks = async () => {
+    await dispatch(getAllStocks());
+  };
+
+  useEffect(() => {
+    fetchStocks();
+  }, []);
+
   return (
     <Tabs.ScrollView
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{padding: 15}}
+      contentContainerStyle={{ padding: 15 }}
       refreshControl={
         <RefreshControl
           onRefresh={refreshHandler}
-          refreshing={refreshing}
-          size={RFValue(10)}
+          refreshing={refereshing}
           colors={[Colors.profit]}
           tintColor={Colors.profit}
         />
-      }>
-      <Separator label="Most bought on Groww" />
-      <StockCard data={mostBoughtData} />
-
-      <Separator label="Product & Tools" />
+      }
+    >
+      <Seprator label="Most bought on Groww" />
+      <StockCard data={stockData} />
+      <Seprator label="Product & Tools" />
       <ProductAndTools />
       <GainerAndLoser />
-      <Separator label="Top Intraday" seeMore />
-      <StockCard data={mostBoughtData} />
+      <Seprator label="Top Intraday" seeMore />
+      <StockCard data={stockData} />
 
-      <Separator label="Stock in news" seeMore />
-      <StockCard data={mostBoughtData} />
-
+      <Seprator label="Stock in news" seeMore />
+      <StockCard data={stockData} />
       <InfoText
         data={[
-          'Groww Invest Tech Pvt. Ltd.',
-          '(Former;y known as Nextbillion Technologoy Pvt. Ltd.)',
-          'SEBI-Stock Broker -INZ000301838 | Member of NSE,BSE',
-          'DP - IN-DP-417-2019',
+          "Groww Invest Tech Pvt. Ltd.",
+          "(Former;y known as Nextbillion Technologoy Pvt. Ltd.)",
+          "SEBI-Stock Broker -INZ000301838 | Member of NSE,BSE",
+          "DP - IN-DP-417-2019",
         ]}
       />
     </Tabs.ScrollView>
@@ -98,14 +108,15 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginBottom: 15,
     marginTop: 16,
-    paddingTop: 4,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    paddingRight: 4,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   seeMore: {
-    overflow: 'hidden',
+    overflow: "hidden",
     top: 2,
   },
 });
+
 export default Explore;

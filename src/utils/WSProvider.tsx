@@ -4,11 +4,12 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from 'react';
-import {io, Socket} from 'socket.io-client';
-import {token_storage} from '../redux/storage';
-import {refresh_tokens} from '../redux/apiConfig';
-import {SOCKET_URL} from '../redux/API';
+} from "react";
+import { io, Socket } from "socket.io-client";
+import { token_storage } from "../redux/storage";
+import { refresh_tokens } from "../redux/apiConfig";
+import { SOCKET_URL } from "../redux/API";
+
 
 interface WSService {
   initializeSocket: () => void;
@@ -21,34 +22,34 @@ interface WSService {
 
 const WSContext = createContext<WSService | undefined>(undefined);
 
-export const WSProvider: React.FC<{children: React.ReactNode}> = ({
+export const WSProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [socketAccessToken, setSocketAccessToken] = useState<string | null>(
-    null,
+    null
   );
   const [changedToken, setChangedToken] = useState<boolean>(false);
   const socket = useRef<Socket>();
 
   useEffect(() => {
-    const token = token_storage.getString('socket_access_token') as any;
+    const token = token_storage.getString("socket_access_token") as any;
     setSocketAccessToken(token);
   }, [changedToken]);
 
   useEffect(() => {
     socket.current = io(SOCKET_URL, {
-      transports: ['websocket'],
+      transports: ["websocket"],
       withCredentials: true,
       extraHeaders: {
-        access_token: socketAccessToken || '',
+        access_token: socketAccessToken || "",
       },
     });
 
     if (socketAccessToken) {
-      socket.current.on('connect_error', error => {
-        if (error.message === 'Authentication error') {
-          console.log('Auth connection error:', error.message);
-          refresh_tokens('socket', true, updateAccessToken);
+      socket.current.on("connect_error", (error) => {
+        if (error.message === "Authentication error") {
+          console.log("Auth connection error:", error.message);
+          refresh_tokens("socket", true, updateAccessToken);
         }
       });
     }
@@ -95,7 +96,7 @@ export const WSProvider: React.FC<{children: React.ReactNode}> = ({
 export const useWS = (): WSService => {
   const socketService = useContext(WSContext);
   if (!socketService) {
-    throw new Error('useWS must be used within a WSProvider');
+    throw new Error("useWS must be used within a WSProvider");
   }
   return socketService;
 };

@@ -12,37 +12,37 @@ export const validatePasswordLength = (password: string) => {
 export const validatePasswordEntry = (
   password: string,
   name: string,
-  email: string,
+  email: string
 ) => {
   if (!validatePasswordLength(password)) {
-    return {msg: 'Password length must be 8 to 20 characters', result: false};
+    return { msg: "Password length must be 8 to 20 characters", result: false };
   }
   if (name && password.toLowerCase().includes(name.toLowerCase())) {
-    return {msg: "Must not contain user's name", result: false};
+    return { msg: "Must not contain user's name", result: false };
   }
 
   if (email && password.toLowerCase().includes(email.toLowerCase())) {
-    return {msg: "Must not contain user's email id", result: false};
+    return { msg: "Must not contain user's email id", result: false };
   }
 
-  return {msg: 'Passed Local Test!', result: true};
+  return { msg: "Passed Local Test!", result: true };
 };
 
 export const formatDate = (timestamp: any) => {
-  'worklet';
+  "worklet";
   const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
   const date = new Date(timestamp);
   const day = date.getDate();
@@ -57,9 +57,9 @@ export const convertUnixTimestamp = (timestamp: number) => {
   let hours = dateObj.getHours();
   const minutes = dateObj.getMinutes();
 
-  let period = 'AM';
+  let period = "AM";
   if (hours >= 12) {
-    period = 'PM';
+    period = "PM";
     hours -= 12;
   }
   if (hours === 0) {
@@ -76,15 +76,15 @@ export const convertUnixTimestamp = (timestamp: number) => {
 };
 
 export const convertUnixTimeWorklet = (timestamp: number) => {
-  'worklet';
+  "worklet";
   const dateObj = new Date(timestamp * 1000);
 
   let hours = dateObj.getHours();
   const minutes = dateObj.getMinutes();
 
-  let period = 'AM';
+  let period = "AM";
   if (hours >= 12) {
-    period = 'PM';
+    period = "PM";
     hours -= 12;
   }
   if (hours === 0) {

@@ -1,13 +1,13 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Colors} from '../../constants/Colors';
-import EtcData from './EtcData';
-import Point from './Point';
-import Seekbar from './Seekbar';
+import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Colors } from "../../constants/Colors";
+import Seekbar from "./Seekbar";
+import Point from "./Point";
+import EtcData from "./EtcData";
 
 const Overview = () => {
   return (
@@ -45,14 +45,14 @@ const Overview = () => {
 
 const styles = StyleSheet.create({
   flexRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     gap: 10,
   },
   flexRowEvenly: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
     gap: 100,
   },
 });

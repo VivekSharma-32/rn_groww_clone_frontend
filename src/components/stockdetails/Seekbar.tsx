@@ -1,9 +1,9 @@
-import {View, StyleSheet, Animated} from 'react-native';
-import React, {FC, useEffect, useRef} from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import {useTheme} from '@react-navigation/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import Point from './Point';
+import { View, StyleSheet, Animated } from "react-native";
+import React, { FC, useEffect, useRef } from "react";
+import Icon from "react-native-vector-icons/Ionicons";
+import { useTheme } from "@react-navigation/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import Point from "./Point";
 
 interface SeekbarProps {
   leftText: string;
@@ -20,7 +20,7 @@ const Seekbar: FC<SeekbarProps> = ({
   rightText,
   position,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const iconPosition = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -38,17 +38,20 @@ const Seekbar: FC<SeekbarProps> = ({
         <Point label={rightText} point={rightPoint} rightEnd />
       </View>
       <View style={styles.seekBarContainer}>
-        <View style={[styles.seekBar, {backgroundColor: colors.notification}]}>
+        <View
+          style={[styles.seekBar, { backgroundColor: colors.notification }]}
+        >
           <Animated.View
             style={[
               styles.iconContainer,
               {
                 left: iconPosition.interpolate({
                   inputRange: [0, 1],
-                  outputRange: ['0%', '95%'],
+                  outputRange: ["0%", "95%"],
                 }),
               },
-            ]}>
+            ]}
+          >
             <Icon
               name="caret-up-sharp"
               color={colors.text}
@@ -64,21 +67,21 @@ const Seekbar: FC<SeekbarProps> = ({
 const styles = StyleSheet.create({
   seekBar: {
     height: 2.5,
-    overflow: 'visible',
+    overflow: "visible",
   },
   seekBarContainer: {
     marginVertical: 10,
   },
   flexRowBetween: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   container: {
     marginVertical: 10,
   },
   iconContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: -1,
   },
 });

@@ -1,25 +1,25 @@
-import {View, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
-import {goBack, navigate} from '../../utils/NavigationUtil';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import CenteredLogo from '../../components/global/CenteredLogo';
-import CustomInput from '../../components/inputs/CustomInput';
-import CustomButton from '../../components/global/CustomButton';
-import {GlobalStyles} from '../../styles/GlobalStyles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import OtpTimer from '../../components/auth/OtpTimer';
-import {useAppDispatch} from '../../redux/reduxHook';
-import {SendOTP, VerifyOTP} from '../../redux/actions/userAction';
+import React, { useState } from "react";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import CenteredLogo from "../../components/global/CenteredLogo";
+import CustomInput from "../../components/inputs/CustomInput";
+import { RFValue } from "react-native-responsive-fontsize";
+import { GlobalStyles } from "../../styles/GlobalStyles";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import CustomButton from "../../components/global/CustomButton";
+import { goBack, navigate } from "../../utils/NavigationUtil";
+import { ScrollView } from "react-native";
+import OtpTimer from "../../components/auth/OtpTimer";
+import { useAppDispatch } from "../../redux/reduxHook";
+import { SendOTP, VerifyOTP } from "../../redux/actions/userAction";
 
-const EmailOtpScreen = ({route}: any) => {
+const EmailOtpScreen = ({ route }: any) => {
   const [loading, setLoading] = useState(false);
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
   const dispatch = useAppDispatch();
-  const [otpError, setOtpError] = useState('');
-
+  const [otpError, setOtpError] = useState("");
   const handleSubmit = async () => {
     if (!otp) {
-      setOtpError('Wrong OTP, 2 attempts remaining');
+      setOtpError("Enter OTP");
       return;
     }
     setLoading(true);
@@ -27,34 +27,36 @@ const EmailOtpScreen = ({route}: any) => {
       VerifyOTP({
         email: route.params.email,
         otp: otp,
-        otp_type: 'email',
+        otp_type: "email",
         data: null,
-      }),
+      })
     );
     setLoading(false);
   };
 
   const resendOTPHandler = async () => {
-    await dispatch(SendOTP({email: route?.params?.email, otp_type: 'email'}));
+    await dispatch(SendOTP({ email: route?.params?.email, otp_type: "email" }));
   };
   return (
     <CustomSafeAreaView>
       <ScrollView>
         <CenteredLogo />
+
         <TouchableOpacity onPress={() => goBack()}>
           <View pointerEvents="none">
             <CustomInput label="EMAIL ADDRESS" value={route.params.email} />
           </View>
         </TouchableOpacity>
+
         <CustomInput
-          label="ENTER OTP SEND TO THIS EMAIL"
+          label="ENTER OTP SEND TO THIS EMAIL ID"
           value={otp}
-          onChangeText={t => {
+          onChangeText={(t) => {
             setOtp(t);
-            setOtpError('');
+            setOtpError("");
           }}
           onSubmitEditing={() => {
-            console.log('HIT OTP API');
+            console.log("HIT OTP API");
           }}
           error={otpError}
           returnKeyType="done"

@@ -1,7 +1,5 @@
-import {
-  createNavigationContainerRef,
-  CommonActions,
-} from '@react-navigation/native';
+
+import { createNavigationContainerRef, CommonActions } from "@react-navigation/native";
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -18,8 +16,8 @@ export async function resetAndNavigate(routeName: string) {
     navigationRef.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{name: routeName}],
-      }),
+        routes: [{ name: routeName }],
+      })
     );
   }
 }
@@ -30,6 +28,7 @@ export async function goBack() {
     navigationRef.dispatch(CommonActions.goBack());
   }
 }
+
 
 export async function prepareNavigation() {
   await navigationRef.isReady();

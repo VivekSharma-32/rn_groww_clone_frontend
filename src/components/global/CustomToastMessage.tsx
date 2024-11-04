@@ -1,23 +1,23 @@
-import React from 'react';
-import {StyleSheet, View, Animated, Platform} from 'react-native';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
-import CustomText from './CustomText';
-import {Colors} from '../../constants/Colors';
-import {FONTS} from '../../constants/Fonts';
-import Icon from 'react-native-vector-icons/Ionicons';
+import React from "react";
+import { StyleSheet, View, Animated, Platform } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import CustomText from "./CustomText";
+import { Colors } from "../../constants/Colors";
+import { FONTS } from "../../constants/Fonts";
+import Icon from "react-native-vector-icons/Ionicons";
 
 interface Props {
   type: string;
   msg: string;
 }
 
-function CustomToastMessage({type, msg}: Props) {
+function CustomToastMessage({ type, msg }: Props) {
   let bgColor = `${Colors.dark_background_light}`;
   let textColor = Colors.dark_text;
 
   switch (type) {
-    case 'warningToast':
-      bgColor = '#fcba03';
+    case "warningToast":
+      bgColor = "#fcba03";
       textColor = Colors.light_text;
       break;
     default:
@@ -25,9 +25,9 @@ function CustomToastMessage({type, msg}: Props) {
   }
 
   return (
-    <Animated.View style={[styles.modal, {backgroundColor: bgColor}]}>
+    <Animated.View style={[styles.modal, { backgroundColor: bgColor }]}>
       <View style={styles.subContainer}>
-        {type == 'successToast' && (
+        {type == "successToast" && (
           <Icon
             name="checkmark-circle-sharp"
             size={RFValue(16)}
@@ -35,9 +35,10 @@ function CustomToastMessage({type, msg}: Props) {
           />
         )}
         <CustomText
-          style={{color: textColor}}
+          style={{ color: textColor }}
           variant="h7"
-          fontFamily={FONTS.Medium}>
+          fontFamily={FONTS.Medium}
+        >
           {msg}
         </CustomText>
       </View>
@@ -47,24 +48,24 @@ function CustomToastMessage({type, msg}: Props) {
 
 const styles = StyleSheet.create({
   subContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    gap:10,
   },
   text: {
     color: Colors.dark_text,
   },
   modal: {
     paddingTop: 16,
-    paddingBottom: Platform.OS === 'ios' ? RFPercentage(4) : 16,
+    paddingBottom: Platform.OS==='ios' ? RFPercentage(4) : 16,
     paddingHorizontal: RFPercentage(3),
-    alignSelf: 'center',
-    position: 'absolute',
+    alignSelf: "center",
+    position: "absolute",
     bottom: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
   },
 });
 

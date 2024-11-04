@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
-import Svg, {Path, G, Line} from 'react-native-svg';
-import {Colors} from '../../../constants/Colors';
+import React, { FC } from "react";
+import Svg, { Path, G, Line } from "react-native-svg";
+import { Colors } from "../../../constants/Colors";
 
 interface CandleProps {
   data: {
@@ -16,8 +16,8 @@ interface CandleProps {
   candleX: number;
 }
 
-const Candle: FC<CandleProps> = ({data, scaleY, candleWidth, candleX}) => {
-  const {open, high, low, close} = data;
+const Candle: FC<CandleProps> = ({ data, scaleY, candleWidth, candleX }) => {
+  const { open, high, low, close } = data;
   const lineY1 = scaleY(high);
   const lineY2 = scaleY(low);
 

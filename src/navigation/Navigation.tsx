@@ -1,10 +1,10 @@
-import React from 'react';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
-import {navigationRef} from '../utils/NavigationUtil';
-import {useCustomTheme} from './Theme';
-import MainNavigator from './MainNavigator';
+import React from "react";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import { navigationRef } from "../utils/NavigationUtil";
+import { useCustomTheme } from "./Theme";
+import MainNavigator from "./MainNavigator";
 
-const Navigation = () => {
+const Navigation: React.FC = () => {
   const theme = useCustomTheme();
   const MyTheme = {
     ...DefaultTheme,
@@ -18,6 +18,7 @@ const Navigation = () => {
       primary: theme.colors.primary,
     },
   };
+
   return (
     <NavigationContainer ref={navigationRef} theme={MyTheme}>
       <MainNavigator />

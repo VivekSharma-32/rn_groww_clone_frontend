@@ -1,12 +1,12 @@
-import Mutual from '../assets/tabicons/mutual.png';
-import MutualFocused from '../assets/tabicons/mutual_focused.png';
-import Stock from '../assets/tabicons/stock.png';
-import StockFocused from '../assets/tabicons/stock_focused.png';
-import Pay from '../assets/tabicons/pay.png';
-import PayFocused from '../assets/tabicons/pay_focused.png';
-import {FC} from 'react';
-import {Image} from 'react-native';
-import {GlobalStyles} from '../styles/GlobalStyles';
+import Mutual from "../assets/tabicons/mutual.png";
+import MutualFocused from "../assets/tabicons/mutual_focused.png";
+import Stock from "../assets/tabicons/stock.png";
+import StockFocused from "../assets/tabicons/stock_focused.png";
+import Pay from "../assets/tabicons/pay.png";
+import PayFocused from "../assets/tabicons/pay_focused.png";
+import { FC } from "react";
+import { Image } from "react-native";
+import { GlobalStyles } from "../styles/GlobalStyles";
 
 interface TabProps {
   name: string;
@@ -16,22 +16,22 @@ interface IconProp {
   focused: boolean;
 }
 
-const TabIcon: FC<TabProps> = ({name}) => {
+const TabIcon: FC<TabProps> = ({ name }) => {
   return (
     <Image
-      source={name === 'Stock' ? Stock : name === 'Mutual' ? Mutual : Pay}
+      source={name === "Stock" ? Stock : name === "Mutual" ? Mutual : Pay}
       style={[GlobalStyles.tabIcon]}
     />
   );
 };
 
-const TabIconFocussed: FC<TabProps> = ({name}) => {
+const TabIconFocused: FC<TabProps> = ({ name }) => {
   return (
     <Image
       source={
-        name === 'Stock'
+        name === "Stock"
           ? StockFocused
-          : name === 'Mutual'
+          : name === "Mutual"
           ? MutualFocused
           : PayFocused
       }
@@ -40,18 +40,14 @@ const TabIconFocussed: FC<TabProps> = ({name}) => {
   );
 };
 
-export const StockTabIcon: FC<IconProp> = ({focused}) => {
-  return focused ? <TabIconFocussed name="Stock" /> : <TabIcon name="Stock" />;
+export const StockTabIcon: FC<IconProp> = ({ focused }) => {
+  return focused ? <TabIconFocused name="Stock" /> : <TabIcon name="Stock" />;
 };
 
-export const MutualTabIcon: FC<IconProp> = ({focused}) => {
-  return focused ? (
-    <TabIconFocussed name="Mutual" />
-  ) : (
-    <TabIcon name="Mutual" />
-  );
+export const MutualTabIcon: FC<IconProp> = ({ focused }) => {
+  return focused ? <TabIconFocused name="Mutual" /> : <TabIcon name="Mutual" />;
 };
 
-export const PayTabIcon: FC<IconProp> = ({focused}) => {
-  return focused ? <TabIconFocussed name="Pay" /> : <TabIcon name="Pay" />;
+export const PayTabIcon: FC<IconProp> = ({ focused }) => {
+  return focused ? <TabIconFocused name="Pay" /> : <TabIcon name="Pay" />;
 };

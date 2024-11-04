@@ -1,19 +1,19 @@
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {FC} from 'react';
-import Logo from '../../assets/images/logo.png';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useTheme} from '@react-navigation/native';
-import UserAvatar from './UserAvatar';
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { FC } from "react";
+import Logo from "../../assets/images/logo.png";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useTheme } from "@react-navigation/native";
+import UserAvatar from "./UserAvatar";
 
 interface TabProps {
   title: string;
 }
 
-const TabHeader: FC<TabProps> = ({title}) => {
-  const {colors} = useTheme();
+const TabHeader: FC<TabProps> = ({ title }) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.flexRowCenter}>
@@ -47,23 +47,23 @@ const TabHeader: FC<TabProps> = ({title}) => {
 
 const styles = StyleSheet.create({
   flexRowCenter: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     gap: 10,
   },
   icon: {
     marginHorizontal: 6,
   },
   container: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingHorizontal: RFValue(12),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   img: {
     width: RFValue(24),
     height: RFValue(24),
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
 });
 

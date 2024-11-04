@@ -1,6 +1,6 @@
-import {configureStore} from '@reduxjs/toolkit';
-import reduxStorage from './storage';
-import rootReducer from './rootReducer';
+import { configureStore } from "@reduxjs/toolkit";
+import reduxStorage from "./storage";
+import rootReducer from "./rootReducer";
 import {
   persistStore,
   persistReducer,
@@ -10,20 +10,20 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage: reduxStorage,
   blacklist: [],
-  whitelist: ['user', 'theme'],
+  whitelist: ["user", "theme"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

@@ -1,82 +1,102 @@
-import AccountProtectedScreen from '../screens/auth/AccountProtectedScreen';
-import AuthVerificationScreen from '../screens/auth/AuthVerificationScreen';
-import ConfirmPinScreen from '../screens/auth/ConfirmPinScreen';
-import EmailOtpScreen from '../screens/auth/EmailOtpScreen';
-import EmailPasswordScreen from '../screens/auth/EmailPasswordScreen';
-import EmailScreen from '../screens/auth/EmailScreen';
-import ForgotPasswordScreen from '../screens/auth/ForgotPasswordScreen';
-import LoginScreen from '../screens/auth/LoginScreen';
-import PersonalDetailScreen from '../screens/auth/PersonalDetailScreen';
-import PhoneScreen from '../screens/auth/PhoneScreen';
-import PinScreen from '../screens/auth/PinScreen';
-import RegisterScreen from '../screens/auth/RegisterScreen';
-import SetPasswordScreen from '../screens/auth/SetPasswordScreen';
-import StockDetail from '../screens/stocks/StockDetail';
-import BottomTab from './BottomTab';
+import EmailPasswordScreen from "../screens/auth/EmailPasswordScreen";
+import EmailOtpScreen from "../screens/auth/EmailOtpScreen";
+import PinScreen from "../screens/auth/PinScreen";
+import AccountProtectedScreen from "../screens/auth/AccountProtectedScreen";
+import PersonalDetailScreen from "../screens/auth/PersonalDetailScreen";
+import ConfirmPinScreen from "../screens/auth/ConfirmPinScreen";
+import LoginScreen from "../screens/auth/LoginScreen";
+import EmailScreen from "../screens/auth/EmailScreen";
+import RegisterScreen from "../screens/auth/RegisterScreen";
+import PhoneScreen from "../screens/auth/PhoneScreen";
+import ForgotPassword from "../screens/auth/ForgotPassword";
+import AuthVerificationScreen from "../screens/auth/AuthVerificationScreen";
+import SplashScreen from "../screens/deeplinks/SplashScreen";
+import BottomTab from "./BottomTab";
+import StockDetail from "../screens/stocks/StockDetail";
+import TradingView from "../screens/stocks/TradingView";
+import Transaction from "../screens/stocks/Transaction";
+import TransactionSuccess from "../screens/stocks/TransactionSuccess";
+import ProfileScreen from "../screens/auth/ProfileScreen";
 
 export const authStacks = [
   {
-    name: 'LoginScreen',
+    name: "LoginScreen",
     component: LoginScreen,
   },
   {
-    name: 'EmailScreen',
+    name: "EmailScreen",
     component: EmailScreen,
   },
   {
-    name: 'EmailPasswordScreen',
+    name: "EmailPasswordScreen",
     component: EmailPasswordScreen,
   },
   {
-    name: 'EmailOtpScreen',
+    name: "EmailOtpScreen",
     component: EmailOtpScreen,
   },
   {
-    name: 'PhoneScreen',
+    name: "PhoneScreen",
     component: PhoneScreen,
   },
   {
-    name: 'PinScreen',
+    name: "PinScreen",
     component: PinScreen,
   },
   {
-    name: 'ConfirmPinScreen',
+    name: "ConfirmPinScreen",
     component: ConfirmPinScreen,
   },
   {
-    name: 'AccountProtectedScreen',
+    name: "AccountProtectedScreen",
     component: AccountProtectedScreen,
   },
   {
-    name: 'PersonalDetailScreen',
+    name: "PersonalDetailScreen",
     component: PersonalDetailScreen,
   },
   {
-    name: 'SetPasswordScreen',
-    component: SetPasswordScreen,
+    name: "RegisterScreen",
+    component: RegisterScreen,
   },
   {
-    name: 'ForgotPassword',
-    component: ForgotPasswordScreen,
+    name: "ForgotPassword",
+    component: ForgotPassword,
   },
   {
-    name: 'AuthVerificationScreen',
+    name: "AuthVerificationScreen",
     component: AuthVerificationScreen,
   },
   {
-    name: 'RegisterScreen',
-    component: RegisterScreen,
+    name: "SplashScreen",
+    component: SplashScreen,
+  },
+  {
+    name: "ProfileScreen",
+    component: ProfileScreen,
   },
 ];
 
 export const dashboardStack = [
   {
-    name: 'BottomTab',
+    name: "BottomTab",
     component: BottomTab,
   },
   {
-    name: 'StockDetail',
+    name: "StockDetail",
     component: StockDetail,
+  },
+  {
+    name: "TradingView",
+    component: TradingView,
+  },
+  {
+    name: "Transaction",
+    component: Transaction,
+  },
+  {
+    name: "TransactionSuccess",
+    component: TransactionSuccess,
   },
 ];
 

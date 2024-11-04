@@ -1,20 +1,19 @@
-import React, {useState} from 'react';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import CustomText from '../../components/global/CustomText';
-import {StyleSheet} from 'react-native';
-import {FONTS} from '../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import CustomNumberPad from '../../components/inputs/CustomNumberPad';
-import OTPInput from '../../components/inputs/OTPInput';
-import BackButton from '../../components/global/BackButton';
-import {useAppDispatch} from '../../redux/reduxHook';
-import {SetLoginPin} from '../../redux/actions/userAction';
-import {useWS} from '../../utils/WSProvider';
-
-const ConfirmPinScreen = ({route}: any) => {
+import React, { useState } from "react";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import CustomText from "../../components/global/CustomText";
+import { StyleSheet } from "react-native";
+import { FONTS } from "../../constants/Fonts";
+import { RFValue } from "react-native-responsive-fontsize";
+import CustomNumberPad from "../../components/inputs/CustomNumberPad";
+import OTPInput from "../../components/inputs/OTPInput";
+import BackButton from "../../components/global/BackButton";
+import { useAppDispatch } from "../../redux/reduxHook";
+import { SetLoginPin } from "../../redux/actions/userAction";
+import { useWS } from "../../utils/WSProvider";
+const ConfirmPinScreen = ({ route }: any) => {
   const dispatch = useAppDispatch();
-  const {updateAccessToken} = useWS();
-  const [otpValues, setOtpValues] = useState(['', '', '', '']);
+  const { updateAccessToken } = useWS();
+  const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [otpError, setOtpError] = useState<string | null>(null);
   const handlePressNumber = (number: number | string) => {
@@ -30,7 +29,7 @@ const ConfirmPinScreen = ({route}: any) => {
   const handlePressBackspace = () => {
     if (focusedIndex > 0) {
       const newOtpValues = [...otpValues];
-      newOtpValues[focusedIndex - 1] = '';
+      newOtpValues[focusedIndex - 1] = "";
       setOtpValues(newOtpValues);
       setFocusedIndex(focusedIndex - 1);
     }
@@ -38,23 +37,23 @@ const ConfirmPinScreen = ({route}: any) => {
 
   const handlePressCheckmark = async () => {
     let valid = false;
-    const isNotEmpty = otpValues.map(i => {
-      if (i == '') {
+    const isNotEmpty = otpValues.map((i) => {
+      if (i == "") {
         valid = true;
-        setOtpError('Enter all PIN');
+        setOtpError("Enter all PIN");
       }
     });
 
     if (otpValues.toString() != route.params.pin) {
       valid = true;
-      setOtpValues(['', '', '', '']);
+      setOtpValues(["", "", "", ""]);
       setFocusedIndex(0);
-      setOtpError('PIN not matching');
+      setOtpError("PIN not matching");
     }
 
     if (!valid) {
       await dispatch(
-        SetLoginPin({login_pin: otpValues.join('')}, updateAccessToken),
+        SetLoginPin({ login_pin: otpValues.join("") }, updateAccessToken)
       );
     }
   };
@@ -65,7 +64,8 @@ const ConfirmPinScreen = ({route}: any) => {
       <CustomText
         variant="h5"
         fontFamily={FONTS.Medium}
-        style={styles.mainContainer}>
+        style={styles.mainContainer}
+      >
         Confirm your Groww PIN
       </CustomText>
       <CustomText style={styles.subText}>

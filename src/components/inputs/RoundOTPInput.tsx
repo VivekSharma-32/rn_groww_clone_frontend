@@ -1,28 +1,34 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, Animated, Easing} from 'react-native';
-import {Colors} from '../../constants/Colors';
-import {useTheme} from '@react-navigation/native';
-import {FONTS} from '../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import TouchableText from '../auth/TouchableText';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Animated,
+  Easing,
+} from "react-native";
+import { Colors } from "../../constants/Colors";
+import { useTheme } from "@react-navigation/native";
+import { FONTS } from "../../constants/Fonts";
+import { RFValue } from "react-native-responsive-fontsize";
+import TouchableText from "../auth/TouchableText";
 
 interface RoundOTPInputProps {
   otpValues: any;
   error?: string | null;
   loading: boolean;
-  onForgotPin: () => void;
+  onForgotPin: ()=>void;
 }
 
 const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
   error,
   otpValues,
   loading,
-  onForgotPin,
+  onForgotPin
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   const [animatedValues] = useState(() =>
-    Array.from({length: otpValues.length}, () => new Animated.Value(1)),
+    Array.from({ length: otpValues.length }, () => new Animated.Value(1))
   );
 
   useEffect(() => {
@@ -37,7 +43,7 @@ const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
     Animated.loop(
       Animated.stagger(
         100,
-        animatedValues.map(val =>
+        animatedValues.map((val) =>
           Animated.sequence([
             Animated.timing(val, {
               toValue: 0.8,
@@ -51,14 +57,14 @@ const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
               easing: Easing.linear,
               useNativeDriver: true,
             }),
-          ]),
-        ),
-      ),
+          ])
+        )
+      )
     ).start();
   };
 
   const resetAnimation = () => {
-    animatedValues.forEach(val => val.setValue(1));
+    animatedValues.forEach((val) => val.setValue(1));
   };
 
   const [shakeAnimation] = useState(new Animated.Value(0));
@@ -106,14 +112,15 @@ const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
                 borderColor: colors.text,
                 borderWidth: 2,
                 backgroundColor:
-                  otpValues[index] !== '' ? colors.text : 'transparent',
+                  otpValues[index] !== "" ? colors.text : "transparent",
                 transform: [
-                  {translateX: shakeAnimation},
-                  {scale: animatedValues[index]},
+                  { translateX: shakeAnimation },
+                  { scale: animatedValues[index] },
                 ],
                 borderRadius: 40,
               },
-            ]}></Animated.View>
+            ]}
+          ></Animated.View>
         ))}
       </View>
       {error && (
@@ -121,8 +128,8 @@ const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
           <Text style={styles.errorText}>{error}</Text>
           <TouchableText
             firstText="Forgot PIN?"
-            onPress={() => onForgotPin()}
-            style={{fontFamily: FONTS.Regular}}
+            onPress={()=>onForgotPin()}
+            style={{ fontFamily: FONTS.Regular }}
           />
         </View>
       )}
@@ -132,20 +139,20 @@ const RoundOTPInput: React.FC<RoundOTPInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     marginVertical: 20,
-    alignSelf: 'center',
-    width: '50%',
+    alignSelf: "center",
+    width: "50%",
   },
   errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 3,
     gap: 5,
-    textAlign: 'center',
-    alignSelf: 'center',
+    textAlign: "center",
+    alignSelf: "center",
   },
   errorText: {
     color: Colors.errorColor,
@@ -155,8 +162,8 @@ const styles = StyleSheet.create({
   inputBox: {
     width: RFValue(15),
     height: RFValue(15),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,21 +1,20 @@
+import React from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  useColorScheme,
-  TouchableOpacity,
-  Platform,
   StyleSheet,
-} from 'react-native';
-import React, {FC} from 'react';
-import Icon2 from 'react-native-vector-icons/Ionicons';
-import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useTheme} from '@react-navigation/native';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Colors} from '../../constants/Colors';
-
+  Text,
+  View,
+  TextInput,
+  Platform,
+  TouchableOpacity,
+} from "react-native";
+import Icon2 from "react-native-vector-icons/Ionicons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Colors } from "../../constants/Colors";
+import { FONTS } from "../../constants/Fonts";
+import { useTheme } from "@react-navigation/native";
+import Icons from "react-native-vector-icons/MaterialCommunityIcons";
+import CustomText from "../global/CustomText";
+import { useCustomColorScheme } from "../../navigation/Theme";
 interface InputProps {
   label?: string;
   error?: string;
@@ -26,7 +25,7 @@ interface InputProps {
   onSelect: (text: string) => void;
 }
 
-const CustomRadioInput: FC<
+const CustomRadioInput: React.FC<
   InputProps & React.ComponentProps<typeof TextInput>
 > = ({
   label,
@@ -38,10 +37,9 @@ const CustomRadioInput: FC<
   options,
   ...props
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
-  const theme = useColorScheme();
-
+  const theme = useCustomColorScheme();
   return (
     <View style={styles.inputMainContainer}>
       {label && (
@@ -49,8 +47,9 @@ const CustomRadioInput: FC<
           <Text
             style={[
               styles.label,
-              {color: colors.text, opacity: theme == 'dark' ? 1 : 0.4},
-            ]}>
+              { color: colors.text, opacity: theme == "dark" ? 1 : 0.4 },
+            ]}
+          >
             {label}
           </Text>
         </View>
@@ -62,12 +61,13 @@ const CustomRadioInput: FC<
             <TouchableOpacity
               key={index}
               style={styles.radioitem}
-              onPress={() => onSelect(text)}>
+              onPress={() => onSelect(text)}
+            >
               <Icons
                 name={
                   selected == text
-                    ? 'circle-slice-8'
-                    : 'checkbox-blank-circle-outline'
+                    ? "circle-slice-8"
+                    : "checkbox-blank-circle-outline"
                 }
                 color={selected == text ? colors.primary : colors.text}
                 size={RFValue(14)}
@@ -91,43 +91,43 @@ const CustomRadioInput: FC<
   );
 };
 
+export default CustomRadioInput;
+
 const styles = StyleSheet.create({
   radioitem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
   },
   radioContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginVertical: 10,
   },
   inputMainContainer: {
     marginVertical: 8,
   },
   errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 3,
     gap: 5,
   },
   errorText: {
     color: Colors.errorColor,
-    fontSize: Platform.OS === 'ios' ? RFValue(11) : RFValue(11),
+    fontSize: Platform.OS === "ios" ? RFValue(11) : RFValue(11),
     fontFamily: FONTS.Medium,
   },
   label: {
-    fontSize: Platform.OS === 'ios' ? RFValue(9) : RFValue(9),
+    fontSize: Platform.OS === "ios" ? RFValue(9) : RFValue(9),
     fontFamily: FONTS.Regular,
   },
   labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     marginBottom: 2,
   },
 });
-
-export default CustomRadioInput;

@@ -1,12 +1,12 @@
-import {View, StyleSheet, Platform} from 'react-native';
-import React, {FC} from 'react';
-import StockItem from './StockItem';
+import { View, StyleSheet, Platform } from "react-native";
+import React, { FC } from "react";
+import StockItem from "./StockItem";
 
 interface StockCardProps {
   data: Record<string, any>;
 }
 
-const StockCard: FC<StockCardProps> = ({data}) => {
+const StockCard: FC<StockCardProps> = ({ data }) => {
   return (
     <View>
       <View style={styles.container}>
@@ -25,9 +25,9 @@ const StockCard: FC<StockCardProps> = ({data}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 

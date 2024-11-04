@@ -1,25 +1,25 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import CenteredLogo from '../../components/global/CenteredLogo';
-import CustomInput from '../../components/inputs/CustomInput';
-import CustomButton from '../../components/global/CustomButton';
-import {validatePasswordLength} from '../../utils/ValidationUtils';
-import {goBack, navigate} from '../../utils/NavigationUtil';
-import {GlobalStyles} from '../../styles/GlobalStyles';
-import TouchableText from '../../components/auth/TouchableText';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useAppDispatch} from '../../redux/reduxHook';
-import {EmailLogin} from '../../redux/actions/userAction';
+import React, { useState } from "react";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import CenteredLogo from "../../components/global/CenteredLogo";
+import CustomInput from "../../components/inputs/CustomInput";
+import CustomButton from "../../components/global/CustomButton";
+import { validatePasswordLength } from "../../utils/ValidationUtils";
+import { goBack, navigate, resetAndNavigate } from "../../utils/NavigationUtil";
+import { GlobalStyles } from "../../styles/GlobalStyles";
+import TouchableText from "../../components/auth/TouchableText";
+import { RFValue } from "react-native-responsive-fontsize";
+import { useAppDispatch } from "../../redux/reduxHook";
+import { EmailLogin } from "../../redux/actions/userAction";
 
-const EmailPasswordScreen = ({route}: any) => {
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+const EmailPasswordScreen = ({ route }: any) => {
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const validate = () => {
     if (!validatePasswordLength(password)) {
-      setPasswordError('Please enter a valid password');
+      setPasswordError("Please enter a valid password");
       return false;
     }
     return true;
@@ -30,7 +30,7 @@ const EmailPasswordScreen = ({route}: any) => {
 
     if (validate()) {
       await dispatch(
-        EmailLogin({email: route.params.email, password: password}),
+        EmailLogin({ email: route.params.email, password: password })
       );
     }
     setLoading(false);
@@ -54,16 +54,16 @@ const EmailPasswordScreen = ({route}: any) => {
           value={password}
           autoFocus={true}
           error={passwordError}
-          onChangeText={text => {
+          onChangeText={(text) => {
             setPassword(text);
-            setPasswordError('');
+            setPasswordError("");
           }}
           onSubmitEditing={handleOnSubmit}
           password
         />
         <TouchableText
           onPress={() =>
-            navigate('ForgotPassword', {
+            navigate("ForgotPassword", {
               email: route.params.email,
             })
           }
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   forgotText: {
     fontSize: RFValue(10),
     marginTop: 5,
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
   },
 });
 

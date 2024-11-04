@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Platform,
   TextStyle,
-  useColorScheme,
-} from 'react-native';
-import Icon2 from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Colors} from '../../constants/Colors';
-import {FONTS} from '../../constants/Fonts';
-import {useTheme} from '@react-navigation/native';
-import CustomText from '../global/CustomText';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
+} from "react-native";
+import Icon2 from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Colors } from "../../constants/Colors";
+import { FONTS } from "../../constants/Fonts";
+import { useTheme } from "@react-navigation/native";
+import CustomText from "../global/CustomText";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 interface InputProps {
   label?: string;
@@ -42,15 +42,15 @@ const CustomDateInput: React.FC<
   onDateChange = () => {},
   ...props
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const [isDayFocused, setIsDayFocused] = useState(false);
   const [isMonthFocused, setIsMonthFocused] = useState(false);
   const [isYearFocused, setIsYearFocused] = useState(false);
-  const [day, setDay] = useState('');
-  const [month, setMonth] = useState('');
-  const [year, setYear] = useState('');
+  const [day, setDay] = useState("");
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const theme = useColorScheme();
+  const theme = useCustomColorScheme();
 
   const monthInputRef = useRef<TextInput>(null);
   const yearInputRef = useRef<TextInput>(null);
@@ -58,7 +58,7 @@ const CustomDateInput: React.FC<
   const handleDayChange = (text: string) => {
     setIsDayFocused(true);
     // Format day input to have leading zero if needed
-    let formattedDay = text.replace(/\D/g, '').substring(0, 2); // Remove non-numeric characters and limit to 2 digits
+    let formattedDay = text.replace(/\D/g, "").substring(0, 2); // Remove non-numeric characters and limit to 2 digits
     setDay(formattedDay);
     if (formattedDay.length === 2) {
       // Move focus to month input when day input is complete
@@ -72,7 +72,7 @@ const CustomDateInput: React.FC<
   const handleMonthChange = (text: string) => {
     setIsMonthFocused(true);
     // Format month input to have leading zero if needed
-    let formattedMonth = text.replace(/\D/g, '').substring(0, 2); // Remove non-numeric characters and limit to 2 digits
+    let formattedMonth = text.replace(/\D/g, "").substring(0, 2); // Remove non-numeric characters and limit to 2 digits
     setMonth(formattedMonth);
     if (formattedMonth.length === 2) {
       // Move focus to year input when month input is complete
@@ -86,7 +86,7 @@ const CustomDateInput: React.FC<
   const handleYearChange = (text: string) => {
     setIsYearFocused(true);
     // Format year input to have leading zeros if needed
-    let formattedYear = text.replace(/\D/g, '').substring(0, 4); // Remove non-numeric characters and limit to 4 digits
+    let formattedYear = text.replace(/\D/g, "").substring(0, 4); // Remove non-numeric characters and limit to 4 digits
     setYear(formattedYear);
     if (formattedYear.length === 4) {
       // When year input is complete, blur the input and update the date
@@ -104,11 +104,11 @@ const CustomDateInput: React.FC<
   const handleDateChange = (selectedDate?: Date) => {
     if (selectedDate) {
       const formattedDate = selectedDate.toLocaleDateString();
-      const dateParts = formattedDate.split('/');
+      const dateParts = formattedDate.split("/");
       if (dateParts.length === 3) {
-        setDay(dateParts[0].padStart(2, '0'));
-        setMonth(dateParts[1].padStart(2, '0'));
-        setYear(dateParts[2].padStart(4, '0'));
+        setDay(dateParts[0].padStart(2, "0"));
+        setMonth(dateParts[1].padStart(2, "0"));
+        setYear(dateParts[2].padStart(4, "0"));
         updateDate(dateParts[0], dateParts[1], dateParts[2]);
       }
     }
@@ -122,17 +122,18 @@ const CustomDateInput: React.FC<
           <Text
             style={[
               styles.label,
-              {color: colors.text, opacity: theme == 'dark' ? 1 : 0.4},
-            ]}>
-            {label} {required && '*'}
+              { color: colors.text, opacity: theme == "dark" ? 1 : 0.4 },
+            ]}
+          >
+            {label} {required && "*"}
           </Text>
         </View>
       )}
 
       <View style={styles.inputContainer}>
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 20 }}>
           <TextInput
-            placeholderTextColor={theme == 'dark' ? '#dadbde' : '#cfd0d3'}
+            placeholderTextColor={theme == "dark" ? "#dadbde" : "#cfd0d3"}
             style={[
               styles.textInput,
               {
@@ -163,12 +164,12 @@ const CustomDateInput: React.FC<
             value={day}
             {...props}
           />
-          <CustomText variant="h4" style={{color: Colors.dark_border}}>
+          <CustomText variant="h4" style={{ color: Colors.dark_border }}>
             /
           </CustomText>
           <TextInput
             ref={monthInputRef}
-            placeholderTextColor={theme == 'dark' ? '#dadbde' : '#cfd0d3'}
+            placeholderTextColor={theme == "dark" ? "#dadbde" : "#cfd0d3"}
             style={[
               styles.textInput,
               {
@@ -199,12 +200,12 @@ const CustomDateInput: React.FC<
             value={month}
             {...props}
           />
-          <CustomText variant="h4" style={{color: Colors.dark_border}}>
+          <CustomText variant="h4" style={{ color: Colors.dark_border }}>
             /
           </CustomText>
           <TextInput
             ref={yearInputRef}
-            placeholderTextColor={theme == 'dark' ? '#dadbde' : '#cfd0d3'}
+            placeholderTextColor={theme == "dark" ? "#dadbde" : "#cfd0d3"}
             style={[
               styles.textInput,
               {
@@ -238,7 +239,8 @@ const CustomDateInput: React.FC<
         </View>
         <TouchableOpacity
           onPress={() => setShowDatePicker(true)}
-          style={styles.iconContainer}>
+          style={styles.iconContainer}
+        >
           <Icon
             size={RFValue(18)}
             name="calendar-today"
@@ -273,37 +275,37 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   errorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 4,
     gap: 5,
   },
   errorText: {
     color: Colors.errorColor,
-    fontSize: Platform.OS === 'ios' ? RFValue(11) : RFValue(11),
+    fontSize: Platform.OS === "ios" ? RFValue(11) : RFValue(11),
     fontFamily: FONTS.Medium,
   },
   label: {
-    fontSize: Platform.OS === 'ios' ? RFValue(9) : RFValue(9),
+    fontSize: Platform.OS === "ios" ? RFValue(9) : RFValue(9),
     fontFamily: FONTS.Regular,
   },
   labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
     marginBottom: 2,
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 10,
   },
   textInput: {
     fontFamily: FONTS.Regular,
-    fontSize: Platform.OS === 'ios' ? RFValue(12) : RFValue(13),
-    alignItems: 'flex-start',
+    fontSize: Platform.OS === "ios" ? RFValue(12) : RFValue(13),
+    alignItems: "flex-start",
     height: 28,
     paddingVertical: 5,
   },

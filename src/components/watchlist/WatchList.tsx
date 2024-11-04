@@ -4,18 +4,18 @@ import {
   RefreshControl,
   TouchableOpacity,
   StyleSheet,
-} from 'react-native';
-import React, {useState} from 'react';
-import {Tabs} from 'react-native-collapsible-tab-view';
-import {watchlistData} from '../../utils/staticData';
-import {Colors} from '../../constants/Colors';
-import {useTheme} from '@react-navigation/native';
-import {FONTS} from '../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import CustomText from '../global/CustomText';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import TouchableText from '../auth/TouchableText';
-import WatchListItem from './WatchListItem';
+} from "react-native";
+import React, { useState } from "react";
+import { Tabs } from "react-native-collapsible-tab-view";
+import { watchlistData } from "../../utils/staticData";
+import { Colors } from "../../constants/Colors";
+import { useTheme } from "@react-navigation/native";
+import { FONTS } from "../../constants/Fonts";
+import { RFValue } from "react-native-responsive-fontsize";
+import CustomText from "../global/CustomText";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import WatchListItem from "./WatchListItem";
+import TouchableText from "../auth/TouchableText";
 
 const WatchList = () => {
   const [refereshing, setRefreshing] = useState(false);
@@ -36,14 +36,14 @@ const WatchList = () => {
       }
       ListFooterComponent={() => <Footer />}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{padding: 15, marginTop: 20, paddingBottom: 40}}
-      renderItem={({item}) => <WatchListItem item={item} />}
+      contentContainerStyle={{ padding: 15, marginTop: 20, paddingBottom: 40 }}
+      renderItem={({ item }) => <WatchListItem item={item} />}
     />
   );
 };
 
 const Header = () => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.btnContainer}>
@@ -63,7 +63,7 @@ const Header = () => {
             <Icon
               name="keyboard-arrow-right"
               size={RFValue(11)}
-              style={{marginLeft: -5}}
+              style={{ marginLeft: -5 }}
               color={colors.text}
             />
           </View>
@@ -86,28 +86,28 @@ const Footer = () => {
 
 const styles = StyleSheet.create({
   btnContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 15,
   },
   container: {
     paddingHorizontal: 1,
   },
   btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
     opacity: 0.9,
   },
   arrowIcon: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   flexRowBetween: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 15,
   },
 });

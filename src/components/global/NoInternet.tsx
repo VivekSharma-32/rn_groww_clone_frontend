@@ -1,30 +1,23 @@
-import {
-  View,
-  Text,
-  useColorScheme,
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useTheme} from '@react-navigation/native';
-import NetInfo from '@react-native-community/netinfo';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import CustomText from './CustomText';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {FONTS} from '../../constants/Fonts';
+import { View, SafeAreaView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useTheme } from "@react-navigation/native";
+import NetInfo from "@react-native-community/netinfo";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { RFValue } from "react-native-responsive-fontsize";
+import CustomText from "./CustomText";
+import { Colors } from "../../constants/Colors";
+import { FONTS } from "../../constants/Fonts";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 const NoInternet = () => {
-  const theme = useColorScheme();
-  const {colors} = useTheme();
-
+  const theme = useCustomColorScheme();
+  const { colors } = useTheme();
   const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state: any) => {
       setIsConnected(state.isConnected);
     });
-
     return () => {
       unsubscribe();
     };
@@ -39,17 +32,19 @@ const NoInternet = () => {
             {
               backgroundColor: colors.background,
             },
-          ]}>
+          ]}
+        >
           <View
             style={[
               styles.subContainer,
               {
                 backgroundColor:
-                  theme === 'dark'
+                  theme === "dark"
                     ? Colors.dark_background_light
                     : Colors.light_sub_background,
               },
-            ]}>
+            ]}
+          >
             <Icon name="wifi-off" size={RFValue(20)} color={colors.text} />
             <View>
               <CustomText variant="h7" fontFamily={FONTS.Medium}>
@@ -58,8 +53,9 @@ const NoInternet = () => {
               <CustomText
                 variant="h8"
                 fontFamily={FONTS.Medium}
-                style={styles.bottomText}>
-                Check your internet
+                style={styles.bottomText}
+              >
+                Check your network connection
               </CustomText>
             </View>
           </View>
@@ -71,20 +67,21 @@ const NoInternet = () => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    width: '100%',
+    width: "100%",
   },
   subContainer: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
     gap: 30,
     paddingHorizontal: 20,
     paddingVertical: 15,
-    flexDirection: 'row',
+    flexDirection: "row",
+    width: "100%",
   },
   bottomText: {
-    opacity: 0.7,
+    opacity: 0.6,
     marginTop: 3,
   },
 });

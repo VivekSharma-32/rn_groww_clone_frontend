@@ -1,7 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit';
-import type {PayloadAction} from '@reduxjs/toolkit';
-import type {RootState} from '../store';
-import {token_storage} from '../storage';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "../store";
+import { token_storage } from "../storage";
 
 interface ThemeState {
   theme: string | null;
@@ -12,7 +12,7 @@ const initialState: ThemeState = {
 };
 
 export const themeSlice = createSlice({
-  name: 'theme',
+  name: "theme",
   initialState,
   reducers: {
     setTheme: (state, action: PayloadAction<string>) => {
@@ -21,7 +21,7 @@ export const themeSlice = createSlice({
   },
 });
 
-export const {setTheme} = themeSlice.actions;
+export const { setTheme } = themeSlice.actions;
 
 export const selectTheme = (state: RootState) => state.theme.theme;
 
@@ -29,7 +29,7 @@ export const toggleColorScheme =
   (colorScheme: string) => async (dispatch: any) => {
     try {
       await dispatch(setTheme(colorScheme));
-      token_storage.set('theme', colorScheme);
+      token_storage.set("theme", colorScheme);
     } catch (error) {
       console.log(error);
     }

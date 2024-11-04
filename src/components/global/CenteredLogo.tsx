@@ -1,7 +1,8 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
-import React from 'react';
-import Logo from '../../assets/images/logo_text.png';
-import {normalizeHeight} from '../../utils/Scaling';
+import { View, Image, StyleSheet } from "react-native";
+import React from "react";
+import Logo from "../../assets/images/logo_text.png";
+import { normalizeHeight } from "../../utils/Scaling";
+
 const CenteredLogo = () => {
   return (
     <View style={styles.container}>
@@ -14,20 +15,20 @@ const CenteredLogo = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 2,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 5,
+    flexDirection: "row",
   },
   imgContainer: {
     width: normalizeHeight(110),
     height: normalizeHeight(28),
   },
   img: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
+    height: "100%",
+    width: "100%",
+    resizeMode: "contain",
   },
 });
 

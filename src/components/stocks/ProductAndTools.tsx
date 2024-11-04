@@ -1,13 +1,13 @@
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import React from 'react';
-import CustomText from '../global/CustomText';
-import {ProductAndToolsData} from '../../utils/staticData';
-import {useTheme} from '@react-navigation/native';
-import {FONTS} from '../../constants/Fonts';
-import {useCustomColorScheme} from '../../navigation/Theme';
+import { View, TouchableOpacity, StyleSheet } from "react-native";
+import React from "react";
+import CustomText from "../global/CustomText";
+import { ProductAndToolsData } from "../../utils/staticData";
+import { useTheme } from "@react-navigation/native";
+import { FONTS } from "../../constants/Fonts";
+import { useCustomColorScheme } from "../../navigation/Theme";
 
 const ProductAndTools = () => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const theme = useCustomColorScheme();
   const tabstyle = {
     padding: 16,
@@ -17,14 +17,15 @@ const ProductAndTools = () => {
   };
   return (
     <View style={styles.container}>
-      {ProductAndToolsData.map(item => {
+      {ProductAndToolsData.map((item) => {
         return (
           <TouchableOpacity
             key={item.id}
             activeOpacity={0.7}
-            style={styles.itemContainer}>
+            style={styles.itemContainer}
+          >
             <View style={tabstyle}>
-              {theme === 'dark' ? item.dark_icon : item.light_icon}
+              {theme === "dark" ? item.dark_icon : item.light_icon}
             </View>
             <CustomText variant="h8" fontFamily={FONTS.Medium}>
               {item.name}
@@ -38,15 +39,15 @@ const ProductAndTools = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 10,
   },
   itemContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
   },
 });
 export default ProductAndTools;

@@ -1,26 +1,26 @@
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import React, {FC} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useTheme} from '@react-navigation/native';
-import CustomText from '../../components/global/CustomText';
-import {FONTS} from '../../constants/Fonts';
+import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { FC } from "react";
+import { RFValue } from "react-native-responsive-fontsize";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { useTheme } from "@react-navigation/native";
+import CustomText from "../../components/global/CustomText";
+import { FONTS } from "../../constants/Fonts";
 import {
   formatNumberWithCommas,
   getSignPaisa,
   getSignText,
-} from '../../utils/NumberUtils';
+} from "../../utils/NumberUtils";
 
 interface DetailsProps {
   data: Record<string, any>;
 }
 
-const Details: FC<DetailsProps> = ({data}) => {
-  const {colors} = useTheme();
+const Details: FC<DetailsProps> = ({ data }) => {
+  const { colors } = useTheme();
   return (
     <View>
       <View style={styles.flexRowBetween}>
-        <Image source={{uri: data?.iconUrl}} style={styles.icon} />
+        <Image source={{ uri: data?.iconUrl }} style={styles.icon} />
 
         <View style={styles.flexRow}>
           <Icon name="access-alarm" color={colors.text} size={RFValue(18)} />
@@ -44,15 +44,17 @@ const Details: FC<DetailsProps> = ({data}) => {
               marginTop: 10,
               color: getSignPaisa(data?.priceChange).color,
             }}
-            fontFamily={FONTS.Medium}>
-            {getSignText(data?.priceChange)} ({data?.percentageChange}){'  '}
+            fontFamily={FONTS.Medium}
+          >
+            {getSignText(data?.priceChange)} ({data?.percentageChange}){"  "}
             <CustomText
               variant="h9"
               style={{
                 marginTop: 10,
                 opacity: 0.7,
               }}
-              fontFamily={FONTS.Medium}>
+              fontFamily={FONTS.Medium}
+            >
               1D
             </CustomText>
           </CustomText>
@@ -67,13 +69,15 @@ const Details: FC<DetailsProps> = ({data}) => {
               paddingHorizontal: 12,
               borderRadius: 50,
             },
-          ]}>
+          ]}
+        >
           <Icon name="link" color={colors.primary} size={RFValue(12)} />
           <CustomText
             variant="h9"
             fontSize={8}
             fontFamily={FONTS.Medium}
-            style={{color: colors.primary}}>
+            style={{ color: colors.primary }}
+          >
             Option Chain
           </CustomText>
         </TouchableOpacity>
@@ -84,13 +88,13 @@ const Details: FC<DetailsProps> = ({data}) => {
 
 const styles = StyleSheet.create({
   flexRowBetween: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    flexDirection: "row",
+    alignItems: "center",
   },
   flexRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 35,
   },
   nameText: {
@@ -99,8 +103,8 @@ const styles = StyleSheet.create({
   icon: {
     width: RFValue(32),
     height: RFValue(32),
-    resizeMode: 'contain',
-    backgroundColor: '#fff',
+    resizeMode: "contain",
+    backgroundColor: "#fff",
     borderRadius: 6,
     padding: 5,
   },

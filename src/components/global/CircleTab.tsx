@@ -1,14 +1,14 @@
-import React, {FC} from 'react';
+import React, { FC } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
   Platform,
   ViewStyle,
   TextStyle,
-} from 'react-native';
-import CustomText from '../global/CustomText';
-import {FONTS} from '../../constants/Fonts';
-import {useTheme} from '@react-navigation/native';
+} from "react-native";
+import CustomText from "../global/CustomText";
+import { FONTS } from "../../constants/Fonts";
+import { useTheme } from "@react-navigation/native";
 
 interface CircleTabProps {
   focused: boolean;
@@ -25,7 +25,7 @@ const CircleTab: FC<CircleTabProps> = ({
   style,
   textStyle,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   return (
     <TouchableOpacity
       style={[
@@ -36,11 +36,13 @@ const CircleTab: FC<CircleTabProps> = ({
         },
         style,
       ]}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <CustomText
-        style={{opacity: focused ? 1 : 0.6, ...textStyle}}
+        style={{ opacity: focused ? 1 : 0.6, ...textStyle }}
         variant="h9"
-        fontFamily={FONTS.Medium}>
+        fontFamily={FONTS.Medium}
+      >
         {label}
       </CustomText>
     </TouchableOpacity>
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight: 10,
     marginVertical: 15,
-    borderWidth: Platform.OS === 'android' ? 1 : 0.5,
+    borderWidth: Platform.OS === "android" ? 1 : 0.5,
     borderRadius: 20,
   },
 });

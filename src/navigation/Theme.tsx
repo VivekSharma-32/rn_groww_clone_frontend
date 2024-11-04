@@ -1,8 +1,8 @@
-import {useColorScheme} from 'react-native';
-import {Colors} from '../constants/Colors';
-import {useAppSelector} from '../redux/reduxHook';
-import {ColorSchemeName} from 'react-native';
-import {selectTheme} from '../redux/reducers/themeSlice';
+import { useColorScheme } from "react-native";
+import { Colors } from "../constants/Colors";
+import { useAppSelector } from "../redux/reduxHook";
+import { selectTheme } from "../redux/reducers/themeSlice";
+import { ColorSchemeName } from "react-native";
 
 interface ThemeColors {
   background: string;
@@ -47,10 +47,10 @@ export const useCustomTheme = (): Theme => {
   const scheme = useColorScheme();
   if (currentTheme) {
     //according to user preference
-    return currentTheme === 'dark' ? darkTheme : lightTheme;
+    return currentTheme === "dark" ? darkTheme : lightTheme;
   } else {
     //according to os preference
-    return scheme === 'dark' ? darkTheme : lightTheme;
+    return scheme === "dark" ? darkTheme : lightTheme;
   }
 };
 
@@ -59,7 +59,7 @@ export const useCustomColorScheme = (): ColorSchemeName => {
   const scheme = useColorScheme();
   if (currentTheme) {
     //return current user theme mode
-    return currentTheme == 'dark' ? 'dark' : 'light';
+    return currentTheme == "dark" ? "dark" : "light";
   } else {
     //return os user theme mode
     return scheme;

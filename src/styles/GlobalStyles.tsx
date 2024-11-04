@@ -1,11 +1,11 @@
-import {StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const GlobalStyles = StyleSheet.create({
   bottomBtn: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 10,
-    width: '100%',
+    width: "100%",
     right: 0,
     left: 20,
   },

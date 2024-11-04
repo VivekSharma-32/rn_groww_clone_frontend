@@ -1,14 +1,27 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import StockCard from './StockCard';
-import {useAppSelector} from '../../redux/reduxHook';
-import MaterialTab from '../global/MaterialTab';
-import CircleTab from '../global/CircleTab';
-import {Gainers, Losers} from '../../utils/staticData';
+import React, { useState } from "react";
+import { View, StyleSheet } from "react-native";
+import MaterialTab from "../global/MaterialTab";
+import CircleTab from "../global/CircleTab";
+import StockCard from "./StockCard";
+import { useAppSelector } from "../../redux/reduxHook";
+import { selectStocks } from "../../redux/reducers/stockSlice";
 
 const GainerAndLoser = () => {
   const [currentTab, setCurrentTab] = useState(0);
   const [marketCap, setMarketCap] = useState(0);
+  const stockData = useAppSelector(selectStocks);
+  const Gainers = [
+    ...stockData.slice(0,3),
+    {
+      name: "Gainers",
+    },
+  ];
+  const Losers = [
+    ...stockData.slice(0, 3),
+    {
+      name: "Losers",
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -53,8 +66,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   tabContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 2,
   },
 });

@@ -3,11 +3,11 @@ import React, {FC, useState} from 'react';
 import {View} from 'react-native';
 import {LineChart, lineDataItem} from 'react-native-gifted-charts';
 import CustomText from '../../global/CustomText';
+import {screenWidth} from 'react-native-gifted-charts/dist/utils';
 import {formatPaisaWithCommas, hexToRGBA} from '../../../utils/NumberUtils';
 import {ptData2} from '../../../utils/staticData';
 import {Colors} from '../../../constants/Colors';
 import {convertUnixTimestamp} from '../../../utils/ValidationUtils';
-import {screenWidth} from '../../../utils/Scaling';
 
 interface Chart {
   height: number;

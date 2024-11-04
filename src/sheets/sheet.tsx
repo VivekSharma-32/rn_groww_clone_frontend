@@ -1,11 +1,11 @@
-import {SheetDefinition, registerSheet} from 'react-native-actions-sheet';
-import CreateWatchlistSheet from './CreateWatchListSheet';
+import { SheetDefinition, registerSheet } from "react-native-actions-sheet";
+import CreateWatchlist from "./CreateWatchlistSheet";
 
-registerSheet('create-watchlist', CreateWatchlistSheet);
+registerSheet("create-watchlist", CreateWatchlist);
 
-declare module 'react-native-actions-sheet' {
+declare module "react-native-actions-sheet" {
   interface Sheets {
-    'create-watchlist': SheetDefinition<{
+    "create-watchlist": SheetDefinition<{
       payload: {
         message: string;
       };

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import CustomSafeAreaView from '../../components/global/CustomSafeAreaView';
-import CustomText from '../../components/global/CustomText';
+import React, { FC, useState } from "react";
+import CustomSafeAreaView from "../../components/global/CustomSafeAreaView";
+import CustomText from "../../components/global/CustomText";
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -8,32 +8,48 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
-import {FONTS} from '../../constants/Fonts';
-import {RFValue} from 'react-native-responsive-fontsize';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Colors} from '../../constants/Colors';
-import CustomButton from '../../components/global/CustomButton';
-import {useTheme} from '@react-navigation/native';
-import OtpTimer from '../../components/auth/OtpTimer';
-import {resetAndNavigate} from '../../utils/NavigationUtil';
+} from "react-native";
+import { FONTS } from "../../constants/Fonts";
+import { RFValue } from "react-native-responsive-fontsize";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { Colors } from "../../constants/Colors";
+import CustomButton from "../../components/global/CustomButton";
+import { useTheme } from "@react-navigation/native";
+import OtpTimer from "../../components/auth/OtpTimer";
+import { useAppDispatch, useAppSelector } from "../../redux/reduxHook";
+import { selectUser } from "../../redux/reducers/userSlice";
+import { SendOTP, VerifyOTP } from "../../redux/actions/userAction";
 
-const ResetOtpVerification = () => {
+interface pin {
+  pin: string;
+}
+
+const ResetOTPVerification: FC<pin> = ({ pin }) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
+
   const [loading, setLoading] = useState(false);
   const [otpError, setOtpError] = useState<string | null>(null);
-  const [otp, setOtp] = useState<string>('');
-  const {colors} = useTheme();
+  const [otp, setOtp] = useState<string>("");
+  const { colors } = useTheme();
   const handleVerification = async () => {
     setLoading(true);
     if (!otp) {
       setLoading(false);
-      setOtpError('Wrong OTP. 2 attempt remaining');
+      setOtpError("Enter OTP");
       return;
     }
-    setTimeout(() => {
-      setLoading(false);
-      resetAndNavigate('LoginScreen');
-    }, 3000);
+
+    await dispatch(
+      VerifyOTP({
+        email: user.email || "",
+        data: pin,
+        otp: otp,
+        otp_type: "reset_pin",
+      })
+    );
+
+    setLoading(false);
   };
 
   const handleChange = (text: string) => {
@@ -41,11 +57,15 @@ const ResetOtpVerification = () => {
     setOtpError(null);
   };
 
+  const resendOtp = async () => {
+    await dispatch(SendOTP({ email: user.email || "", otp_type: "reset_pin" }));
+  };
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={10}
       behavior="padding"
-      style={styles.keyboardContainer}>
+      style={styles.keyboardContainer}
+    >
       <CustomSafeAreaView>
         <ScrollView contentContainerStyle={styles.container}>
           <Icon color={Colors.profit} name="lock" size={RFValue(22)} />
@@ -63,18 +83,22 @@ const ResetOtpVerification = () => {
             onChangeText={handleChange}
             autoFocus
             keyboardType="number-pad"
-            style={[styles.input, {color: colors.text}]}
+            style={[styles.input, { color: colors.text }]}
             caretHidden
           />
 
           {otpError && <Text style={styles.errorText}>{otpError}</Text>}
 
-          <OtpTimer onPress={() => {}} type="otp" style={styles.timer} />
+          <OtpTimer
+            onPress={() => resendOtp()}
+            type="otp"
+            style={styles.timer}
+          />
         </ScrollView>
 
         <View style={styles.btnContainer}>
           <CustomButton
-            text={'VERIFY'}
+            text={"VERIFY"}
             onPress={handleVerification}
             loading={loading}
             disabled={false}
@@ -87,8 +111,8 @@ const ResetOtpVerification = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
     marginBottom: RFValue(10),
   },
@@ -99,12 +123,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   btnContainer: {
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     flex: 1,
   },
   emailContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 4,
     marginTop: 15,
   },
@@ -128,8 +152,8 @@ const styles = StyleSheet.create({
     fontSize: RFValue(18),
     borderBottomWidth: 2,
     borderBottomColor: Colors.light_border,
-    width: '30%',
-    textAlign: 'center',
+    width: "30%",
+    textAlign: "center",
   },
   timer: {
     fontSize: RFValue(10),
@@ -137,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ResetOtpVerification;
+export default ResetOTPVerification;

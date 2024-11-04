@@ -1,21 +1,21 @@
-import React from 'react';
-import {Text, StyleSheet, TextStyle, TextProps} from 'react-native';
-import {useTheme} from '@react-navigation/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {FONTS} from '../../constants/Fonts';
+import React from "react";
+import { Text, StyleSheet, TextStyle, TextProps } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { FONTS } from "../../constants/Fonts";
 
 interface Props {
   variant?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'h7'
-    | 'h8'
-    | 'h9'
-    | 'body';
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "h7"
+    | "h8"
+    | "h9"
+    | "body";
   fontFamily?: FONTS;
   fontSize?: number;
   style?: TextStyle;
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const CustomText: React.FC<Props> = ({
-  variant = 'body',
+  variant = "body",
   fontFamily = FONTS.Regular,
   fontSize,
   style,
@@ -33,35 +33,35 @@ const CustomText: React.FC<Props> = ({
   children,
   numberOfLines,
 }) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
 
   let computedFontSize: number;
   switch (variant) {
-    case 'h1':
+    case "h1":
       computedFontSize = RFValue(fontSize || 22);
       break;
-    case 'h2':
+    case "h2":
       computedFontSize = RFValue(fontSize || 20);
       break;
-    case 'h3':
+    case "h3":
       computedFontSize = RFValue(fontSize || 18);
       break;
-    case 'h4':
+    case "h4":
       computedFontSize = RFValue(fontSize || 16);
       break;
-    case 'h5':
+    case "h5":
       computedFontSize = RFValue(fontSize || 14);
       break;
-    case 'h6':
+    case "h6":
       computedFontSize = RFValue(fontSize || 12);
       break;
-    case 'h7':
+    case "h7":
       computedFontSize = RFValue(fontSize || 12);
       break;
-    case 'h8':
+    case "h8":
       computedFontSize = RFValue(fontSize || 10);
       break;
-    case 'h9':
+    case "h9":
       computedFontSize = RFValue(fontSize || 9);
       break;
     default:
@@ -71,22 +71,22 @@ const CustomText: React.FC<Props> = ({
   const fontFamilyStyle = {
     fontFamily:
       fontFamily === FONTS.Black
-        ? 'Roboto-Black'
+        ? "Roboto-Black"
         : fontFamily === FONTS.Bold
-        ? 'Roboto-Bold'
+        ? "Roboto-Bold"
         : fontFamily === FONTS.Light
-        ? 'Roboto-Light'
+        ? "Roboto-Light"
         : fontFamily === FONTS.Medium
-        ? 'Roboto-Medium'
+        ? "Roboto-Medium"
         : fontFamily === FONTS.Number
-        ? 'Manrope-Regular'
+        ? "Manrope-Regular"
         : fontFamily === FONTS.NumberSemiBold
-        ? 'Manrope-SemiBold'
+        ? "Manrope-SemiBold"
         : fontFamily === FONTS.Lato
-        ? 'Lato-Regular'
+        ? "Lato-Regular"
         : fontFamily === FONTS.Thin
-        ? 'Roboto-Thin'
-        : 'Roboto-Regular',
+        ? "Roboto-Thin"
+        : "Roboto-Regular",
   };
 
   return (
@@ -94,11 +94,12 @@ const CustomText: React.FC<Props> = ({
       onLayout={onLayout}
       style={[
         styles.text,
-        {color: colors.text, fontSize: computedFontSize},
+        { color: colors.text, fontSize: computedFontSize },
         fontFamilyStyle,
         style,
       ]}
-      numberOfLines={numberOfLines !== undefined ? numberOfLines : undefined}>
+      numberOfLines={numberOfLines !== undefined ? numberOfLines : undefined}
+    >
       {children}
     </Text>
   );
@@ -106,7 +107,7 @@ const CustomText: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   text: {
-    textAlign: 'left',
+    textAlign: "left",
   },
 });
 
